@@ -9,27 +9,21 @@ import {
 import {
   LayoutDashboard,
   ChartNoAxesCombined,
-  Settings,
 } from "lucide-react";
 import Link from "next/link";
 
 export function AppSidebar() {
   const menuItems = [
     {
-      title: "Reports",
-      href: "/dashboard/reports",
+      title: "User Dashboard",
+      href: "/dashboard",
       icon: LayoutDashboard,
     },
     {
-      title: "Analytics",
-      href: "/dashboard/analytics",
+      title: "Admin Dashboard",
+      href: "/admin-dashboard",
       icon: ChartNoAxesCombined,
-    },
-    {
-      title: "Settings",
-      href: "/dashboard/settings",
-      icon: Settings,
-    },
+    }
   ];
 
   return (
