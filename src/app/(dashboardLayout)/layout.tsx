@@ -13,7 +13,7 @@ export default function Layout({
   };
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={{ role: "admin" }}/>
 
       <main className="flex-1 p-4">
         <SidebarTrigger />

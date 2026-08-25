@@ -6,43 +6,41 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  LayoutDashboard,
-  ChartNoAxesCombined,
-} from "lucide-react";
+import { adminRoutes } from "@/routes/adminRoutes";
+import { userRoutes } from "@/routes/userRoutes";
 import Link from "next/link";
 
-export function AppSidebar() {
-  const menuItems = [
-    {
-      title: "User Dashboard",
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Admin Dashboard",
-      href: "/admin-dashboard",
-      icon: ChartNoAxesCombined,
-    }
-  ];
+type AppSidebarProps = {
+  user: {
+    role: string;
+  };
+};
+
+export function AppSidebar({ user }: AppSidebarProps) {
+  const routes = user.role === "admin" ? adminRoutes : userRoutes;
 
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            {menuItems.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton>
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
+        {routes.map((route) => (
+          <SidebarGroup key={route.title}>
+            <h3 className="px-2 py-2 text-sm font-semibold">
+              {route.title}
+            </h3>
+
+            <SidebarMenu>
+              {route.items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   );
