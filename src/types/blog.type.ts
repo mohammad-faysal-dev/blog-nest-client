@@ -5,7 +5,7 @@ export interface BlogPost {
   thumbnail: string;
   tags: string[];
   views: number;
-  count?: {
+  _count?: {
     comments: number;
   };
   isFeatured: boolean;
