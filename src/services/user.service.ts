@@ -4,14 +4,16 @@ export const userService = {
   getSession: async function () {
     try {
       const cookieStore = await cookies();
-      const res = await fetch("http://localhost:3000/api/auth/get-session", {
+      const res = await fetch("http://localhost:5000/api/auth/get-session", {
         headers: {
           Cookie: cookieStore.toString(),
         },
         cache: "no-store",
       });
       const session = await res.json();
-      console.log("session", session);
+      if (session === null) {
+        return { data: null, error: { message: "No session found" } };
+      }
       return { data: session, error: null };
     } catch (err) {
       console.log(err);
