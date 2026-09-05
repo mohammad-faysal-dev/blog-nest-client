@@ -1,8 +1,8 @@
-import { userService } from "@/services/user.service";
+import { blogService } from "@/services/blog.service";
 
 const Page = async () => {
-  const { data } = await userService.getSession();
-  console.log("data", data);
+  const { data } = await blogService.getBlogPosts();
+  console.log(data);
   return <div>this is the common layout page</div>;
 };
 
