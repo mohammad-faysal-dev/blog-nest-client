@@ -24,14 +24,12 @@ export function AppSidebar({ user }: AppSidebarProps) {
       <SidebarContent>
         {routes.map((route) => (
           <SidebarGroup key={route.title}>
-            <h3 className="px-2 py-2 text-sm font-semibold">
-              {route.title}
-            </h3>
+            <h3 className="px-2 py-2 text-sm font-semibold">{route.title}</h3>
 
             <SidebarMenu>
               {route.items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton>
                     <Link href={item.url}>
                       <span>{item.title}</span>
                     </Link>
