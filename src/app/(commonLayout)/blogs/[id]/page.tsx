@@ -2,12 +2,13 @@ import { blogService } from "@/services/blog.service";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  CalendarDays,
-  Eye,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowLeft, CalendarDays, Eye, MessageCircle } from "lucide-react";
+import { BlogPost } from "@/types";
+
+export async function generateStaticParams() {
+  const { data } = await blogService.getBlogPosts();
+  return data?.data?.map((blog: BlogPost) => ({ id: blog.id })).splice(0, 3);
+}
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
@@ -16,14 +17,11 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   console.log("data", data);
 
-  const formattedDate = new Date(data.createdAt).toLocaleDateString(
-    "en-US",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const formattedDate = new Date(data.createdAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const commentCount = data._count?.comments ?? 0;
 
@@ -121,23 +119,17 @@ const Page = async ({ params }: { params: { id: string } }) => {
           <aside className="h-fit space-y-6 lg:sticky lg:top-6">
             {/* About Card */}
             <div className="rounded-3xl border bg-card p-6 shadow-sm">
-              <h2 className="mb-6 text-xl font-bold">
-                About this post
-              </h2>
+              <h2 className="mb-6 text-xl font-bold">About this post</h2>
 
               <div className="space-y-5">
                 {/* Author */}
                 <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <span className="text-sm font-bold">
-                      A
-                    </span>
+                    <span className="text-sm font-bold">A</span>
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-xs text-muted-foreground">
-                      Author
-                    </p>
+                    <p className="text-xs text-muted-foreground">Author</p>
 
                     <p className="mt-1 truncate text-sm font-semibold">
                       {data.authorId}
@@ -152,9 +144,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">
-                      Published
-                    </p>
+                    <p className="text-xs text-muted-foreground">Published</p>
 
                     <p className="mt-1 text-sm font-semibold">
                       {formattedDate}
@@ -169,13 +159,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">
-                      Views
-                    </p>
+                    <p className="text-xs text-muted-foreground">Views</p>
 
-                    <p className="mt-1 text-sm font-semibold">
-                      {data.views}
-                    </p>
+                    <p className="mt-1 text-sm font-semibold">{data.views}</p>
                   </div>
                 </div>
 
@@ -186,13 +172,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
                   </div>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">
-                      Comments
-                    </p>
+                    <p className="text-xs text-muted-foreground">Comments</p>
 
-                    <p className="mt-1 text-sm font-semibold">
-                      {commentCount}
-                    </p>
+                    <p className="mt-1 text-sm font-semibold">{commentCount}</p>
                   </div>
                 </div>
               </div>
@@ -200,9 +182,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
             {/* Tags Card */}
             <div className="rounded-3xl border bg-card p-6 shadow-sm">
-              <h3 className="mb-4 text-lg font-bold">
-                Tags
-              </h3>
+              <h3 className="mb-4 text-lg font-bold">Tags</h3>
 
               <div className="flex flex-wrap gap-2">
                 {data.tags.map((tag: string) => (
@@ -218,29 +198,19 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
             {/* Stats Card */}
             <div className="rounded-3xl bg-primary p-6 text-primary-foreground shadow-lg">
-              <p className="text-sm opacity-80">
-                Blog statistics
-              </p>
+              <p className="text-sm opacity-80">Blog statistics</p>
 
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-2xl font-bold">
-                    {data.views}
-                  </p>
+                  <p className="text-2xl font-bold">{data.views}</p>
 
-                  <p className="text-xs opacity-80">
-                    Views
-                  </p>
+                  <p className="text-xs opacity-80">Views</p>
                 </div>
 
                 <div>
-                  <p className="text-2xl font-bold">
-                    {commentCount}
-                  </p>
+                  <p className="text-2xl font-bold">{commentCount}</p>
 
-                  <p className="text-xs opacity-80">
-                    Comments
-                  </p>
+                  <p className="text-xs opacity-80">Comments</p>
                 </div>
               </div>
             </div>
