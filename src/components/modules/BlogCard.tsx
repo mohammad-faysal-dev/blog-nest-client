@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BlogPost } from "@/types";
+import Link from "next/link";
 
 export function BlogCard({ post }: { post: BlogPost }) {
   return (
@@ -34,9 +35,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
           </CardAction>
         )}
 
-        <CardTitle className="line-clamp-2">
-          {post.title}
-        </CardTitle>
+        <CardTitle className="line-clamp-2">{post.title}</CardTitle>
 
         <CardDescription className="line-clamp-2">
           {post.content}
@@ -48,8 +47,9 @@ export function BlogCard({ post }: { post: BlogPost }) {
           <span>{post.views} views</span>
           <span>{post._count?.comments ?? 0} comments</span>
         </div>
-
-        <Button className="w-full">View Post</Button>
+        <Link href={`/blogs/${post.id}`} className="w-full">
+          <Button className="w-full">View Post</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
