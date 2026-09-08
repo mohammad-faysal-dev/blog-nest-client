@@ -154,7 +154,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           variant="outline"
           type="button"
         >
-          Login With Google
+          Signup With Google
         </Button>
       </CardFooter>
     </Card>
