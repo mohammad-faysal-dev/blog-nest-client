@@ -10,8 +10,8 @@ import {
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { env } from "@/env";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { toast } from "sonner";
 
 const API_URL = env.API_URL;
 
@@ -38,6 +38,9 @@ const CreateBlogFromServer = () => {
       },
       body: JSON.stringify(blogData),
     });
+    if (res.ok) {
+      revalidateTag("blogPost", "max");
+    }
   };
 
   return (

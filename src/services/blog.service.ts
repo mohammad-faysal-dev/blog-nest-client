@@ -30,7 +30,7 @@ export const blogService = {
       if (options?.revalidate) {
         config.next = { revalidate: options.revalidate };
       }
-      console.log(url.toString());
+      config.next = { ...config.next, tags: ["blogPosts"] };
       const res = await fetch(url.toString(), config);
       const data = await res.json();
       return { data: data, error: null };
