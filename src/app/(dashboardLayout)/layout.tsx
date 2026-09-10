@@ -1,25 +1,26 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Roles } from "@/constants/roles";
+import { userService } from "@/services/user.service";
 
-export default function Layout({
+export default async function DashboardLayout({
   user,
   admin,
-}: {  
+}: {
   user: React.ReactNode;
   admin: React.ReactNode;
 }) {
-  const userInfo = {
-    role: "admin",
-  };
+  const { data } = await userService.getSession();
+  console.log(data);
+  const userInfo = data.user;
   return (
     <SidebarProvider>
-      <AppSidebar user={{ role: "admin" }}/>
+      <AppSidebar user={userInfo} />
 
       <main className="flex-1 p-4">
         <SidebarTrigger />
 
-        <div>{userInfo.role === "admin" ? admin : user}</div>
-
+        <div>{userInfo.role === Roles.admin ? admin : user}</div>
       </main>
     </SidebarProvider>
   );
