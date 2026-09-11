@@ -1,4 +1,4 @@
-import CreateBlogFromServer from "@/components/modules/user/createBlog/CreateBlogFromServer";
+import CreateBlogFromClient from "@/components/modules/user/createBlog/CreateBlogFromClient";
 import { blogService } from "@/services/blog.service";
 import { BlogPost } from "@/types";
 
@@ -7,7 +7,7 @@ export default async function UserDashboard() {
 
   return (
     <div>
-      <CreateBlogFromServer />
+      <CreateBlogFromClient />
       {data.data.map((item: BlogPost) => (
         <p key={item.id}>{item.title}</p>
       ))}
