@@ -16,6 +16,7 @@ interface GetBlogParams {
   isFeatured?: boolean;
   search?: string;
   page?: string;
+  limit?: string;
 }
 export const blogService = {
   getBlogPosts: async function (
