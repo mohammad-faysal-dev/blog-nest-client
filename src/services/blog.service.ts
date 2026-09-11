@@ -1,6 +1,13 @@
 import { env } from "@/env";
+import { BlogPost } from "@/types";
+import { cookies } from "next/headers";
 const API_URL = env.API_URL;
 
+export interface BlogData {
+  title: string;
+  content: string;
+  tag?: string[];
+}
 interface ServiceOptions {
   cache?: RequestCache;
   revalidate?: number;
@@ -47,6 +54,29 @@ export const blogService = {
     } catch (err) {
       console.log(err);
       return { data: null, error: { message: "Failed to fetch blog post" } };
+    }
+  },
+  createBlogPost: async (blogData: BlogData) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(blogData),
+      });
+      const data = await res.json();
+      if (data.error) {
+        return {
+          data: null,
+          error: { message: data.error || "Error post not created" },
+        };
+      }
+      return { data: data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
     }
   },
 };
