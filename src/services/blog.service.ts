@@ -15,6 +15,7 @@ interface ServiceOptions {
 interface GetBlogParams {
   isFeatured?: boolean;
   search?: string;
+  page?: string;
 }
 export const blogService = {
   getBlogPosts: async function (
