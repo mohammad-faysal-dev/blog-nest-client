@@ -44,7 +44,6 @@ const CreateBlogFromClient = () => {
           .map((item) => item.trim())
           .filter((item) => item !== ""),
       };
-      console.log(blogData);
       try {
         const res = await createBlogPost(blogData);
         if (res.error) {
