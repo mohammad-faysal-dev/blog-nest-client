@@ -1,4 +1,5 @@
 "use client";
+import { createBlogPost, createBlogs } from "@/actions/blog.action";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,7 +37,8 @@ const CreateBlogFromClient = () => {
     onSubmit: async ({ value }) => {
       const toastId = await toast.loading("Creating......");
       const blogData = {
-        ...value,
+        title: value.title,
+        content: value.content,
         tags: value.tags
           .split(",")
           .map((item) => item.trim())
@@ -44,6 +46,10 @@ const CreateBlogFromClient = () => {
       };
       console.log(blogData);
       try {
+        const res = await createBlogPost(blogData);
+        if (res.error) {
+          toast.error(res.error.message, { id: toastId });
+        }
         toast.success("Post Created", { id: toastId });
       } catch (err) {
         toast.error("Something went wrong", { id: toastId });
