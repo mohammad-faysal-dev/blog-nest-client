@@ -19,9 +19,10 @@ import { Input } from "@/components/ui/input";
 import z from "zod";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth";
+
 import { Button } from "../ui/button";
 import { Mail, Lock, Loader2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
   email: z.email(),
