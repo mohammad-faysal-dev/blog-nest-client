@@ -79,11 +79,18 @@ const Page = async () => {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
       {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-visible pt-32 pb-24 md:pt-40 md:pb-32">
-        <div className="absolute top-0 left-0 right-0 h-[500px] w-full bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] -z-10" />
+      <section className="relative overflow-visible pt-32 pb-24 md:pt-40 md:pb-32 isolate">
+        {/* Animated Background Blobs */}
+        <div className="absolute inset-0 overflow-hidden -z-10 bg-background/50 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[100px] animate-blob mix-blend-screen opacity-70 dark:opacity-40" />
+          <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-500/20 blur-[120px] animate-blob-slow mix-blend-screen opacity-60 dark:opacity-30" style={{ animationDelay: '2s' }} />
+          <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[60%] rounded-full bg-blue-500/20 blur-[150px] animate-blob mix-blend-screen opacity-50 dark:opacity-20" style={{ animationDelay: '4s' }} />
+          {/* Subtle Grid overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
+        </div>
 
         <div className="container px-4 md:px-6 mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-background/50 backdrop-blur-md mb-8 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-background/50 backdrop-blur-md mb-8 shadow-sm animate-float">
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
               <Sparkles className="h-3 w-3 text-primary animate-pulse" />
             </span>
@@ -111,7 +118,7 @@ const Page = async () => {
               </Button>
             </Link>
             <Link href="/about">
-              <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base font-semibold border-border bg-background/50 backdrop-blur-sm hover:bg-muted/80">
+              <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base font-semibold border-border bg-background/50 backdrop-blur-sm hover:bg-muted/80 transition-all hover:-translate-y-0.5">
                 Learn More
               </Button>
             </Link>
