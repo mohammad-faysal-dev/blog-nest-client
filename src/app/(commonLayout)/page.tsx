@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { NewsletterForm } from "@/components/modules/NewsletterForm";
+import { FaqSection } from "@/components/modules/FaqSection";
 import {
   Eye,
   MessageSquare,
@@ -329,57 +330,7 @@ const Page = async () => {
       </section>
 
       {/* PREMIUM FAQ SECTION */}
-      <section className="py-28 relative overflow-hidden bg-background">
-        {/* Subtle glow effect */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -z-10" />
-
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-            <div className="lg:w-1/3 flex flex-col justify-start relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-card backdrop-blur-md mb-8 shadow-sm w-fit">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
-                  <MessageSquare className="h-3 w-3 text-primary" />
-                </span>
-                <span className="text-sm font-medium tracking-tight text-foreground/80">
-                  Got Questions?
-                </span>
-              </div>
-
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6 leading-[1.1] text-foreground">
-                Frequently <br /><span className="text-muted-foreground">Asked</span><br /> Questions
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-sm">
-                Everything you need to know about our content, community, and how you can contribute.
-              </p>
-
-              <Button size="lg" className="rounded-full w-fit px-8 h-12 shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5 font-semibold">
-                Contact Support <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="lg:w-2/3 flex flex-col gap-6 relative z-10">
-              {faqs.map((faq, idx) => (
-                <div key={idx} className="group p-8 md:p-10 rounded-[2rem] bg-card border border-border/40 hover:border-primary/40 transition-all duration-300 hover:shadow-xl relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative z-10 flex gap-6 md:gap-8">
-                    <span className="text-primary/30 font-bold text-2xl md:text-3xl font-mono mt-0.5">
-                      0{idx + 1}
-                    </span>
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold mb-4 tracking-tight text-foreground group-hover:text-primary transition-colors">
-                        {faq.question}
-                      </h3>
-                      <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <FaqSection />
 
       {/* NEWSLETTER SECTION (ULTRA PREMIUM) */}
       <section className="py-20 md:py-24 relative">
