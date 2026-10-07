@@ -37,12 +37,12 @@ import {
 
 // Category data with enhanced aesthetic themes
 const categories = [
-  { name: "Web Dev", icon: MonitorPlay, count: 42, theme: "blue", gradient: "from-blue-500/20 to-cyan-500/5", border: "border-blue-500/20", iconColor: "text-blue-500" },
-  { name: "AI & ML", icon: Cpu, count: 28, theme: "purple", gradient: "from-purple-500/20 to-fuchsia-500/5", border: "border-purple-500/20", iconColor: "text-purple-500" },
-  { name: "Architecture", icon: Component, count: 19, theme: "green", gradient: "from-emerald-500/20 to-teal-500/5", border: "border-emerald-500/20", iconColor: "text-emerald-500" },
-  { name: "Security", icon: Shield, count: 15, theme: "red", gradient: "from-red-500/20 to-rose-500/5", border: "border-red-500/20", iconColor: "text-red-500" },
-  { name: "Databases", icon: Database, count: 23, theme: "orange", gradient: "from-orange-500/20 to-amber-500/5", border: "border-orange-500/20", iconColor: "text-orange-500" },
-  { name: "Design", icon: Paintbrush, count: 31, theme: "pink", gradient: "from-pink-500/20 to-rose-500/5", border: "border-pink-500/20", iconColor: "text-pink-500" },
+  { name: "Web Dev", icon: MonitorPlay, count: 42, iconBg: "bg-blue-500/10", iconColor: "text-blue-500", dot: "bg-blue-500" },
+  { name: "AI & ML", icon: Cpu, count: 28, iconBg: "bg-violet-500/10", iconColor: "text-violet-500", dot: "bg-violet-500" },
+  { name: "Architecture", icon: Component, count: 19, iconBg: "bg-emerald-500/10", iconColor: "text-emerald-500", dot: "bg-emerald-500" },
+  { name: "Security", icon: Shield, count: 15, iconBg: "bg-rose-500/10", iconColor: "text-rose-500", dot: "bg-rose-500" },
+  { name: "Databases", icon: Database, count: 23, iconBg: "bg-amber-500/10", iconColor: "text-amber-500", dot: "bg-amber-500" },
+  { name: "Design", icon: Paintbrush, count: 31, iconBg: "bg-pink-500/10", iconColor: "text-pink-500", dot: "bg-pink-500" },
 ];
 
 const stats = [
@@ -80,7 +80,7 @@ const Page = async () => {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
       {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-visible pt-32 pb-24 md:pt-40 md:pb-32 isolate">
+      <section className="relative overflow-visible pt-44 pb-36 md:pt-64 md:pb-52 isolate">
         {/* Animated Background Blobs */}
         <div className="absolute inset-0 overflow-hidden -z-10 bg-background/50 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[100px] animate-blob mix-blend-screen opacity-70 dark:opacity-40" />
@@ -196,7 +196,7 @@ const Page = async () => {
         </section>
       )}
 
-      {/* CATEGORIES GRID - GLASS DESIGN */}
+      {/* CATEGORIES GRID - CLEAN MODERN DESIGN */}
       <section className="py-24 relative">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center justify-center text-center space-y-4 mb-16">
@@ -206,17 +206,16 @@ const Page = async () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((cat) => (
               <Link key={cat.name} href={`/blogs?category=${encodeURIComponent(cat.name)}`}>
-                <div className={`h-full flex flex-col items-center justify-center p-8 rounded-3xl border bg-gradient-to-b ${cat.gradient} ${cat.border} hover:border-[color:var(--primary)] transition-all duration-300 group cursor-pointer hover:shadow-xl hover:-translate-y-1 bg-card backdrop-blur-sm relative overflow-hidden`}>
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-0 group-hover:opacity-20 transition-opacity" />
-
-                  <div className={`p-4 rounded-2xl bg-background/50 border border-border backdrop-blur-md mb-5 group-hover:scale-110 shadow-sm transition-transform duration-300 ${cat.iconColor}`}>
-                    <cat.icon className="h-6 w-6" strokeWidth={1.5} />
+                <div className="h-full group flex flex-col items-center text-center p-6 rounded-2xl border border-border/50 bg-card hover:bg-muted/50 hover:border-border hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${cat.iconBg} ${cat.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                    <cat.icon className="h-5 w-5" strokeWidth={1.75} />
                   </div>
-                  <h3 className="font-bold text-base text-foreground text-center tracking-tight">{cat.name}</h3>
-                  <p className="text-sm font-medium text-muted-foreground mt-1">{cat.count} articles</p>
+                  <h3 className="font-semibold text-sm text-foreground tracking-tight leading-tight">{cat.name}</h3>
+                  <p className="text-xs text-muted-foreground mt-1.5 font-medium">{cat.count} articles</p>
+                  <div className={`w-1.5 h-1.5 rounded-full mt-3 ${cat.dot} opacity-60 group-hover:opacity-100 transition-opacity`} />
                 </div>
               </Link>
             ))}

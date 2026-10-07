@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, Code2, Sparkles } from "lucide-react";
+import { Menu, Code2 } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -134,9 +134,8 @@ const Navbar1 = ({
               </Button>
             </Link>
             <Link href={auth.signup.url}>
-              <Button className="font-semibold text-sm rounded-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-0.5 group">
+              <Button className="font-semibold text-sm rounded-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-0.5">
                 {auth.signup.title}
-                <Sparkles className="ml-1.5 h-3.5 w-3.5 opacity-70 group-hover:opacity-100 animate-pulse" />
               </Button>
             </Link>
           </div>
