@@ -128,16 +128,10 @@ const page = async ({ searchParams }: PageProps) => {
 
         {/* 4. Blog Cards Grid Layout */}
         {posts.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {posts.map((post: BlogPost) => (
-              <div
-                key={post.id}
-                className="group relative transition-all duration-500 hover:-translate-y-2"
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/50 to-purple-500/50 rounded-[22px] blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative h-full">
-                  <BlogCard post={post} />
-                </div>
+              <div key={post.id} className="h-full">
+                <BlogCard post={post} />
               </div>
             ))}
           </div>
