@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { NewsletterForm } from "@/components/modules/NewsletterForm";
 import { FaqSection } from "@/components/modules/FaqSection";
+import { AnimatedSection } from "@/components/modules/AnimatedSection";
 import {
   Eye,
   MessageSquare,
@@ -32,38 +33,33 @@ import {
   LayoutTemplate,
   MonitorPlay,
   Component,
-  Paintbrush
+  Paintbrush,
+  BookOpen,
+  Rss,
+  ChevronRight,
 } from "lucide-react";
 
-// Category data with enhanced aesthetic themes
+// Category data
 const categories = [
-  { name: "Web Dev", icon: MonitorPlay, count: 42, iconBg: "bg-blue-500/10", iconColor: "text-blue-500", dot: "bg-blue-500" },
-  { name: "AI & ML", icon: Cpu, count: 28, iconBg: "bg-violet-500/10", iconColor: "text-violet-500", dot: "bg-violet-500" },
-  { name: "Architecture", icon: Component, count: 19, iconBg: "bg-emerald-500/10", iconColor: "text-emerald-500", dot: "bg-emerald-500" },
-  { name: "Security", icon: Shield, count: 15, iconBg: "bg-rose-500/10", iconColor: "text-rose-500", dot: "bg-rose-500" },
-  { name: "Databases", icon: Database, count: 23, iconBg: "bg-amber-500/10", iconColor: "text-amber-500", dot: "bg-amber-500" },
-  { name: "Design", icon: Paintbrush, count: 31, iconBg: "bg-pink-500/10", iconColor: "text-pink-500", dot: "bg-pink-500" },
+  { name: "Web Dev", icon: MonitorPlay, count: 42, gradient: "from-blue-500 to-cyan-500", shadow: "shadow-blue-500/20", lightBg: "bg-blue-500/10", lightText: "text-blue-600 dark:text-blue-400" },
+  { name: "AI & ML", icon: Cpu, count: 28, gradient: "from-violet-500 to-purple-600", shadow: "shadow-violet-500/20", lightBg: "bg-violet-500/10", lightText: "text-violet-600 dark:text-violet-400" },
+  { name: "Architecture", icon: Component, count: 19, gradient: "from-emerald-500 to-teal-500", shadow: "shadow-emerald-500/20", lightBg: "bg-emerald-500/10", lightText: "text-emerald-600 dark:text-emerald-400" },
+  { name: "Security", icon: Shield, count: 15, gradient: "from-rose-500 to-pink-600", shadow: "shadow-rose-500/20", lightBg: "bg-rose-500/10", lightText: "text-rose-600 dark:text-rose-400" },
+  { name: "Databases", icon: Database, count: 23, gradient: "from-amber-500 to-orange-500", shadow: "shadow-amber-500/20", lightBg: "bg-amber-500/10", lightText: "text-amber-600 dark:text-amber-400" },
+  { name: "Design", icon: Paintbrush, count: 31, gradient: "from-pink-500 to-fuchsia-600", shadow: "shadow-pink-500/20", lightBg: "bg-pink-500/10", lightText: "text-pink-600 dark:text-pink-400" },
 ];
 
 const stats = [
-  { label: "Community Members", value: "15k+", icon: Users },
-  { label: "Monthly Views", value: "85k+", icon: Eye },
-  { label: "Expert Contributors", value: "40+", icon: Star },
+  { label: "Community Members", value: "15k+", icon: Users, desc: "Active learners worldwide" },
+  { label: "Monthly Views", value: "85k+", icon: Eye, desc: "Articles read each month" },
+  { label: "Expert Contributors", value: "40+", icon: Star, desc: "Industry professionals" },
 ];
 
-const faqs = [
-  {
-    question: "How often are new articles published?",
-    answer: "We publish high-quality technical articles, tutorials, and insights every week, ensuring you stay up to date with the fast-paced tech world."
-  },
-  {
-    question: "Can I contribute to the blog?",
-    answer: "Absolutely! We're always looking for passionate developers and industry experts to share their knowledge."
-  },
-  {
-    question: "Who is the content for?",
-    answer: "Our content caters to all levels, from beginner tutorials to advanced system design and architecture deep dives."
-  }
+// Ticker items
+const tickerItems = [
+  "Modern Engineering", "AI & Machine Learning", "Web Development",
+  "Cloud Architecture", "Open Source", "System Design", "DevOps",
+  "TypeScript", "React Ecosystem", "Backend Development",
 ];
 
 const Page = async () => {
@@ -78,224 +74,375 @@ const Page = async () => {
   const gridPosts = recentPosts.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
-      {/* PREMIUM HERO SECTION */}
-      <section className="relative overflow-visible pt-44 pb-36 md:pt-64 md:pb-52 isolate">
-        {/* Animated Background Blobs */}
-        <div className="absolute inset-0 overflow-hidden -z-10 bg-background/50 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[100px] animate-blob mix-blend-screen opacity-70 dark:opacity-40" />
-          <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-500/20 blur-[120px] animate-blob-slow mix-blend-screen opacity-60 dark:opacity-30" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[60%] rounded-full bg-blue-500/20 blur-[150px] animate-blob mix-blend-screen opacity-50 dark:opacity-20" style={{ animationDelay: '4s' }} />
-          {/* Subtle Grid overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
+    <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden">
+
+      {/* ====================================================
+          HERO SECTION — Full-screen cinematic with particles
+      ===================================================== */}
+      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20">
+
+        {/* ── Ambient blobs ── */}
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-primary/20 to-violet-500/20 blur-[120px] animate-blob" />
+          <div className="absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-blue-500/15 to-cyan-500/10 blur-[100px] animate-blob-slow" style={{ animationDelay: "2s" }} />
+          <div className="absolute -bottom-20 left-1/4 w-[700px] h-[400px] rounded-full bg-gradient-to-t from-purple-600/15 to-transparent blur-[130px] animate-blob" style={{ animationDelay: "4s" }} />
         </div>
 
-        <div className="container px-4 md:px-6 mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-background/50 backdrop-blur-md mb-8 shadow-sm animate-float">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
-              <Sparkles className="h-3 w-3 text-primary animate-pulse" />
-            </span>
-            <span className="text-sm font-medium tracking-tight text-foreground/80">
-              Discover the new standard for dev blogs
-            </span>
+        {/* ── Grid overlay ── */}
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:44px_44px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_20%,transparent_100%)]" />
+
+        {/* ── Floating glowing dots ── */}
+        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1.5 h-1.5 rounded-full bg-primary/40 animate-float"
+              style={{
+                top: `${15 + i * 14}%`,
+                left: `${5 + i * 16}%`,
+                animationDelay: `${i * 1.2}s`,
+                animationDuration: `${5 + i}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="container px-4 md:px-6 mx-auto text-center flex flex-col items-center gap-8 py-20">
+
+          {/* Pill badge */}
+          <div className="animate-slide-up" style={{ animationDelay: "0ms" }}>
+            <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md shadow-lg shadow-primary/5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary" />
+              </span>
+              <span className="text-sm font-semibold text-primary tracking-wide">
+                New articles every week
+              </span>
+            </div>
           </div>
 
-          <h1 className="max-w-4xl text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] mb-6">
-            Build Better With <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-primary via-primary/80 to-purple-500">
-              Modern Engineering
-            </span>
-          </h1>
+          {/* Main heading */}
+          <div className="animate-slide-up" style={{ animationDelay: "80ms" }}>
+            <h1 className="max-w-5xl text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold tracking-tighter leading-[1.05]">
+              Where Great Code
+              <br />
+              <span className="text-shimmer">
+                Meets Great Writing
+              </span>
+            </h1>
+          </div>
 
-          <p className="max-w-2xl text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 font-medium">
-            Elevate your coding skills with expert-led tutorials, best practices, and the latest trends
-            in software architecture.
-          </p>
+          {/* Subtitle */}
+          <div className="animate-slide-up" style={{ animationDelay: "160ms" }}>
+            <p className="max-w-2xl text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
+              Elevate your engineering with expert-led tutorials, deep-dives into architecture,
+              and the latest trends in software development.
+            </p>
+          </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          {/* CTA Buttons */}
+          <div className="animate-slide-up flex flex-col sm:flex-row items-center gap-4" style={{ animationDelay: "240ms" }}>
             <Link href="/blogs">
-              <Button size="lg" className="rounded-full px-8 h-12 text-base font-semibold shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5">
-                Start Reading <ArrowRight className="ml-2 h-4 w-4" />
+              <Button
+                size="lg"
+                className="group rounded-full px-9 h-13 text-base font-bold shadow-2xl shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+              >
+                Start Reading
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/about">
-              <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base font-semibold border-border bg-background/50 backdrop-blur-sm hover:bg-muted/80 transition-all hover:-translate-y-0.5">
-                Learn More
+              <Button
+                variant="outline"
+                size="lg"
+                className="group rounded-full px-9 h-13 text-base font-semibold border-border/60 bg-background/50 backdrop-blur-sm hover:bg-muted/60 transition-all duration-300 hover:-translate-y-1"
+              >
+                <BookOpen className="mr-2 h-4 w-4" />
+                About Us
               </Button>
             </Link>
+          </div>
+
+          {/* Social proof mini-stat strip */}
+          <div className="animate-slide-up flex flex-wrap justify-center gap-x-8 gap-y-3 mt-2" style={{ animationDelay: "320ms" }}>
+            {[
+              { val: "15k+", lbl: "Members" },
+              { val: "85k+", lbl: "Views/month" },
+              { val: "40+", lbl: "Contributors" },
+            ].map((s) => (
+              <div key={s.lbl} className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+                <span className="w-1 h-1 rounded-full bg-primary/60 inline-block" />
+                <strong className="text-foreground">{s.val}</strong> {s.lbl}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
+          <span className="text-xs text-muted-foreground font-medium tracking-widest uppercase">Scroll</span>
+          <div className="w-5 h-8 rounded-full border-2 border-border/50 flex items-start justify-center p-1">
+            <div className="w-1 h-2 rounded-full bg-primary/60 animate-bounce" />
           </div>
         </div>
       </section>
 
-      {/* FEATURED POST (MAGAZINE STYLE) */}
+      {/* ====================================================
+          TICKER TAPE
+      ===================================================== */}
+      <div className="relative border-y border-border/40 bg-muted/30 py-4 overflow-hidden">
+        <div className="flex animate-ticker whitespace-nowrap select-none">
+          {[...tickerItems, ...tickerItems].map((item, i) => (
+            <span key={i} className="inline-flex items-center gap-4 px-6 text-sm font-semibold text-muted-foreground/70">
+              <Sparkles className="h-3 w-3 text-primary/50 flex-shrink-0" />
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ====================================================
+          FEATURED POST — MAGAZINE STYLE
+      ===================================================== */}
       {heroPost && (
-        <section className="container mx-auto px-4 md:px-6 mb-32 -mt-4">
+        <AnimatedSection className="container mx-auto px-4 md:px-6 py-24" direction="up">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+              <Flame className="h-3.5 w-3.5 text-primary" />
+              <span className="text-sm font-bold text-primary tracking-wide uppercase">Featured Story</span>
+            </div>
+            <div className="h-px flex-1 bg-gradient-to-r from-border/60 to-transparent" />
+          </div>
+
           <Link href={`/blogs/${heroPost.id}`} className="group block">
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-border/40 shadow-2xl bg-card transition-all duration-700 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.03)] hover:-translate-y-1">
+            <div className="relative rounded-[2.5rem] overflow-hidden border border-border/40 shadow-2xl bg-card transition-all duration-700 hover:shadow-[0_32px_64px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_32px_64px_rgba(0,0,0,0.4)] hover:-translate-y-2 card-glow-hover">
               <div className="grid md:grid-cols-2">
-                {/* Image Section */}
-                <div className="relative h-[350px] md:h-[550px] w-full overflow-hidden bg-muted">
+
+                {/* Image */}
+                <div className="relative h-[320px] md:h-[520px] overflow-hidden bg-muted">
                   <Image
                     src={heroPost.thumbnail || banner}
                     alt={heroPost.title}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
                   {heroPost.isFeatured && (
-                    <div className="absolute top-6 left-6 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/20 text-white shadow-xl">
-                      <Flame className="h-3.5 w-3.5" />
-                      <span className="text-xs font-bold tracking-wider uppercase">Featured</span>
+                    <div className="absolute top-6 left-6 flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/15 backdrop-blur-xl border border-white/25 text-white shadow-xl">
+                      <Flame className="h-3.5 w-3.5 animate-pulse" />
+                      <span className="text-xs font-bold tracking-widest uppercase">Featured</span>
                     </div>
                   )}
+
+                  {/* Read time badge */}
+                  <div className="absolute bottom-6 left-6 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-xl text-white/90 text-xs font-semibold">
+                    <BookOpen className="h-3 w-3" />
+                    5 min read
+                  </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="flex flex-col justify-center p-8 md:p-14 bg-card relative">
-                  {/* Subtle background element */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -z-10" />
+                {/* Content */}
+                <div className="flex flex-col justify-center p-8 md:p-14 bg-card relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-72 h-72 bg-primary/5 rounded-full blur-[80px] -z-10" />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-violet-500/5 rounded-full blur-[60px] -z-10" />
 
                   <div className="flex flex-wrap items-center gap-3 mb-6">
                     {heroPost.tags?.[0] && (
-                      <span className="text-xs font-bold tracking-widest text-primary uppercase">
+                      <span className="text-xs font-bold tracking-widest text-primary uppercase border border-primary/30 bg-primary/8 px-3 py-1 rounded-full">
                         {heroPost.tags[0]}
                       </span>
                     )}
-                    <span className="w-1.5 h-1.5 rounded-full bg-border" />
                     <span className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
-                      <Calendar className="h-4 w-4" />
+                      <Calendar className="h-3.5 w-3.5 opacity-60" />
                       {heroPost.createdAt
-                        ? new Date(heroPost.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                        ? new Date(heroPost.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
                         : "Recently published"}
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.15] mb-6 group-hover:text-primary transition-colors duration-300">
+                  <h2 className="text-3xl md:text-4xl xl:text-5xl font-extrabold tracking-tighter text-foreground leading-[1.15] mb-6 group-hover:text-primary transition-colors duration-500">
                     {heroPost.title}
                   </h2>
 
-                  <p className="text-muted-foreground text-lg mb-10 line-clamp-3 leading-relaxed">
+                  <p className="text-muted-foreground text-base md:text-lg mb-10 line-clamp-3 leading-relaxed">
                     {heroPost.content || heroPost.excerpt}
                   </p>
 
-                  <div className="flex items-center justify-between mt-auto pt-8 border-t border-border/50">
-                    <div className="flex items-center gap-6 text-sm font-semibold text-muted-foreground">
-                      <span className="flex items-center gap-2"><Eye className="h-4 w-4 text-foreground/40" /> {heroPost.views || 0}</span>
-                      <span className="flex items-center gap-2"><MessageSquare className="h-4 w-4 text-foreground/40" /> {heroPost._count?.comments || 0}</span>
+                  <div className="flex items-center justify-between mt-auto pt-8 border-t border-border/40">
+                    <div className="flex items-center gap-5 text-sm font-semibold text-muted-foreground">
+                      <span className="flex items-center gap-2 hover:text-foreground transition-colors">
+                        <Eye className="h-4 w-4 opacity-60" />
+                        {heroPost.views || 0} views
+                      </span>
+                      <span className="flex items-center gap-2 hover:text-foreground transition-colors">
+                        <MessageSquare className="h-4 w-4 opacity-60" />
+                        {heroPost._count?.comments || 0} comments
+                      </span>
                     </div>
-                    <span className="flex items-center text-sm font-bold text-foreground group-hover:text-primary transition-colors">
-                      Read Story <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
+                    <span className="inline-flex items-center gap-2 text-sm font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      Read Story
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2 duration-300" />
                     </span>
                   </div>
                 </div>
               </div>
             </div>
           </Link>
-        </section>
+        </AnimatedSection>
       )}
 
-      {/* CATEGORIES GRID - CLEAN MODERN DESIGN */}
-      <section className="py-24 relative">
+      {/* ====================================================
+          CATEGORIES GRID — Gradient Cards
+      ===================================================== */}
+      <section className="py-28 relative overflow-hidden bg-muted/20">
+        {/* BG accent */}
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[800px] h-[300px] bg-primary/5 rounded-full blur-[100px]" />
+        </div>
+
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center text-center space-y-4 mb-16">
-            <h2 className="text-4xl font-bold tracking-tight">Explore by Topic</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl font-medium">
+          <AnimatedSection className="text-center mb-16" direction="up">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-bold tracking-wide mb-6">
+              <LayoutTemplate className="h-3.5 w-3.5" />
+              Browse Topics
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground mb-4">
+              Explore by Topic
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
               Dive into our extensive library of tech content carefully categorized for your learning journey.
             </p>
-          </div>
+          </AnimatedSection>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((cat) => (
-              <Link key={cat.name} href={`/blogs?category=${encodeURIComponent(cat.name)}`}>
-                <div className="h-full group flex flex-col items-center text-center p-6 rounded-2xl border border-border/50 bg-card hover:bg-muted/50 hover:border-border hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${cat.iconBg} ${cat.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                    <cat.icon className="h-5 w-5" strokeWidth={1.75} />
+            {categories.map((cat, i) => (
+              <AnimatedSection key={cat.name} delay={i * 60} direction="up">
+                <Link href={`/blogs?category=${encodeURIComponent(cat.name)}`}>
+                  <div className="h-full group flex flex-col items-center text-center p-6 rounded-2xl border border-border/50 bg-card hover:border-transparent hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    {/* Hover gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl`} />
+
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 bg-gradient-to-br ${cat.gradient} shadow-lg ${cat.shadow} group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <cat.icon className="h-6 w-6 text-white" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="font-bold text-sm text-foreground tracking-tight leading-tight mb-1">{cat.name}</h3>
+                    <p className={`text-xs font-semibold mt-1 ${cat.lightText}`}>{cat.count} articles</p>
+                    <ChevronRight className="h-3 w-3 text-muted-foreground/40 mt-2 group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
-                  <h3 className="font-semibold text-sm text-foreground tracking-tight leading-tight">{cat.name}</h3>
-                  <p className="text-xs text-muted-foreground mt-1.5 font-medium">{cat.count} articles</p>
-                  <div className={`w-1.5 h-1.5 rounded-full mt-3 ${cat.dot} opacity-60 group-hover:opacity-100 transition-opacity`} />
-                </div>
-              </Link>
+                </Link>
+              </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* RECENT ARTICLES - SLEEK CARDS */}
-      <section className="py-28 bg-muted/20">
+      {/* ====================================================
+          RECENT ARTICLES — Sleek Card Grid
+      ===================================================== */}
+      <section className="py-28 relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex w-full items-end justify-between mb-16">
+          <AnimatedSection className="flex w-full items-end justify-between mb-16" direction="up">
             <div className="flex flex-col space-y-3">
-              <h2 className="text-4xl font-bold tracking-tight">Latest Insights</h2>
-              <p className="text-muted-foreground text-lg font-medium">The freshest content from our team.</p>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-bold tracking-wide w-fit">
+                <Rss className="h-3.5 w-3.5" />
+                Latest Posts
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter">Latest Insights</h2>
+              <p className="text-muted-foreground text-lg font-medium">The freshest content from our expert team.</p>
             </div>
             <Link href="/blogs" className="hidden sm:flex">
               <Button variant="outline" className="rounded-full px-6 group bg-background/50 backdrop-blur-sm font-semibold border-border hover:bg-muted">
                 View all <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-          </div>
+          </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {gridPosts.length > 0 ? (
-              gridPosts.map((post: any) => (
-                <Link key={post.id || post._id} href={`/blogs/${post.id}`} className="block h-full group">
-                  <div className="h-full flex flex-col overflow-hidden bg-card border border-border/60 rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 relative">
-                    <div className="relative w-full aspect-[1.5] overflow-hidden bg-muted">
-                      <Image
-                        src={post.thumbnail || banner}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      {post.tags?.[0] && (
-                        <div className="absolute top-5 left-5 z-10">
-                          <span className="px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-xl text-foreground text-xs font-bold tracking-wide shadow-sm">
-                            {post.tags[0]}
+              gridPosts.map((post: any, i: number) => (
+                <AnimatedSection key={post.id || post._id} delay={i * 80} direction="up">
+                  <Link href={`/blogs/${post.id}`} className="block h-full group">
+                    <div className="h-full flex flex-col overflow-hidden bg-card border border-border/50 rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/8 hover:-translate-y-2 hover:border-border relative">
+
+                      {/* Hover glow top border */}
+                      <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/40 transition-all duration-500" />
+
+                      {/* Image */}
+                      <div className="relative w-full aspect-[16/10] overflow-hidden bg-muted">
+                        <Image
+                          src={post.thumbnail || banner}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-108"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Tag chip on image */}
+                        {post.tags?.[0] && (
+                          <div className="absolute top-4 left-4 z-10">
+                            <span className="px-3 py-1.5 rounded-full bg-background/85 backdrop-blur-xl text-foreground text-xs font-bold tracking-wide shadow-md border border-border/30">
+                              {post.tags[0]}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* View count overlay */}
+                        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md text-white/90 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Eye className="h-3 w-3" />
+                          {post.views || 0}
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-7 flex flex-col flex-1">
+                        <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="h-3.5 w-3.5 opacity-60" />
+                            {post.createdAt
+                              ? new Date(post.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+                              : "Recent"}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageSquare className="h-3 w-3 opacity-60" />
+                            {post._count?.comments || 0}
                           </span>
                         </div>
-                      )}
-                    </div>
 
-                    <div className="p-8 flex flex-col flex-1 relative z-20 bg-card">
-                      <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5" />
-                          {post.createdAt ? new Date(post.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Recent"}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Eye className="h-3.5 w-3.5" />{post.views || 0}
-                        </span>
-                      </div>
+                        <h3 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors duration-300 leading-[1.35] mb-3 line-clamp-2">
+                          {post.title}
+                        </h3>
 
-                      <h3 className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors leading-[1.3] mb-4 line-clamp-2">
-                        {post.title}
-                      </h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3 flex-1">
+                          {post.content || post.excerpt}
+                        </p>
 
-                      <p className="text-muted-foreground leading-relaxed mb-6 line-clamp-3">
-                        {post.content || post.excerpt}
-                      </p>
-
-                      <div className="mt-auto pt-6 border-t border-border/40 flex items-center justify-between">
-                        <span className="text-sm font-bold text-foreground inline-flex items-center group-hover:text-primary transition-colors">
-                          Read Now <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </span>
+                        <div className="pt-5 border-t border-border/40 flex items-center justify-between">
+                          <span className="text-sm font-bold text-muted-foreground group-hover:text-primary transition-colors duration-300 inline-flex items-center gap-1.5">
+                            Read Now
+                            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                          </span>
+                          <span className="text-xs text-muted-foreground/50 font-medium">5 min</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </AnimatedSection>
               ))
             ) : (
-              <div className="col-span-full flex flex-col items-center justify-center py-32 text-muted-foreground border border-dashed rounded-3xl bg-card">
-                <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                  <Code2 className="h-8 w-8 opacity-40" />
+              <AnimatedSection className="col-span-full">
+                <div className="flex flex-col items-center justify-center py-36 text-muted-foreground border border-dashed border-border/60 rounded-3xl bg-card/50">
+                  <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center mb-5 shadow-inner">
+                    <Code2 className="h-9 w-9 opacity-30" />
+                  </div>
+                  <p className="text-xl font-bold text-foreground mb-1">No articles yet</p>
+                  <p className="text-sm">Check back soon for fresh content!</p>
                 </div>
-                <p className="text-xl font-semibold text-foreground">No articles yet</p>
-                <p className="text-sm mt-1">Check back soon for fresh content!</p>
-              </div>
+              </AnimatedSection>
             )}
           </div>
 
@@ -309,62 +456,102 @@ const Page = async () => {
         </div>
       </section>
 
-      {/* STATS SECTION */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/3 -z-10" />
+      {/* ====================================================
+          STATS SECTION — Glassmorphism cards
+      ===================================================== */}
+      <section className="py-28 relative overflow-hidden">
+        {/* Dark gradient background */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/5 via-background to-primary/5" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]" />
+
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <AnimatedSection className="text-center mb-16" direction="up">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground mb-4">
+              Trusted by Developers
+              <br />
+              <span className="text-shimmer">Worldwide</span>
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center justify-center p-8 text-center bg-card rounded-[2rem] border border-border/50 shadow-sm relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="p-4 bg-primary/10 rounded-2xl mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon className="h-6 w-6" strokeWidth={1.5} />
+              <AnimatedSection key={idx} delay={idx * 100} direction="up">
+                <div className="group relative flex flex-col items-center justify-center p-10 text-center bg-card/80 backdrop-blur-sm rounded-[2rem] border border-border/50 hover:border-primary/30 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="p-4 bg-primary/10 rounded-2xl mb-6 text-primary group-hover:scale-110 group-hover:bg-primary/15 transition-all duration-500 relative z-10">
+                    <stat.icon className="h-7 w-7" strokeWidth={1.5} />
+                  </div>
+                  <h4 className="text-5xl md:text-6xl font-extrabold tracking-tighter text-foreground mb-2 relative z-10">
+                    {stat.value}
+                  </h4>
+                  <p className="text-base font-bold text-muted-foreground mb-1 relative z-10">{stat.label}</p>
+                  <p className="text-xs text-muted-foreground/60 font-medium relative z-10">{stat.desc}</p>
                 </div>
-                <h4 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground mb-2">{stat.value}</h4>
-                <p className="text-base font-medium text-muted-foreground">{stat.label}</p>
-              </div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PREMIUM FAQ SECTION */}
+      {/* ====================================================
+          FAQ SECTION
+      ===================================================== */}
       <FaqSection />
 
-      {/* NEWSLETTER SECTION (ULTRA PREMIUM) */}
-      <section className="py-20 md:py-24 relative">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="rounded-[3rem] overflow-hidden border border-white/10 dark:border-white/5 bg-[#1B1B1F] dark:bg-[#09090B] text-white shadow-2xl relative">
-              {/* Decorative Effects */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      {/* ====================================================
+          NEWSLETTER SECTION — Premium dark card
+      ===================================================== */}
+      <section className="py-20 md:py-28 relative">
+        <AnimatedSection className="container mx-auto px-4 relative z-10" direction="up">
+          <div className="max-w-5xl mx-auto">
+            <div className="rounded-[3rem] overflow-hidden border border-white/8 dark:border-white/5 bg-[#111116] text-white shadow-2xl relative">
 
-              <div className="p-8 md:py-14 md:px-16 text-center flex flex-col items-center relative z-20">
-                <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-                  <Zap className="h-7 w-7 text-white/90" strokeWidth={1.5} />
+              {/* Animated blobs */}
+              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/25 rounded-full blur-[120px] pointer-events-none animate-blob-slow" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-violet-600/20 rounded-full blur-[100px] pointer-events-none animate-blob" style={{ animationDelay: "3s" }} />
+
+              {/* Grid lines */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+
+              {/* Top shimmer line */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+              <div className="p-10 md:py-16 md:px-20 text-center flex flex-col items-center relative z-10">
+                <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white/8 border border-white/12 mb-6 backdrop-blur-md shadow-xl group hover:bg-white/12 transition-colors duration-300">
+                  <Zap className="h-7 w-7 text-white/90 animate-pulse" strokeWidth={1.5} />
                 </div>
 
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-tight">
-                  Join the developer newsletter.
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 text-white/80 text-sm font-semibold tracking-wide mb-6">
+                  <Rss className="h-3.5 w-3.5" />
+                  Weekly Newsletter
+                </div>
+
+                <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tighter mb-5 leading-tight">
+                  Never miss a great
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-primary/70">
+                    article again.
+                  </span>
                 </h2>
 
-                <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto font-medium">
-                  Get the best development articles, tutorials, and insights
-                  delivered straight to your inbox.
+                <p className="text-white/55 text-lg mb-10 max-w-xl mx-auto font-medium leading-relaxed">
+                  Get the best development tutorials, architecture insights, and industry news
+                  delivered to your inbox every week.
                 </p>
 
                 <div className="w-full max-w-md mx-auto">
                   <NewsletterForm />
-                  <p className="mt-4 text-xs font-medium text-white/40">
-                    No spam. Unsubscribe at any time.
+                  <p className="mt-5 text-xs font-semibold text-white/30 flex items-center justify-center gap-2">
+                    <Shield className="h-3 w-3" />
+                    No spam, ever. Unsubscribe anytime.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
     </div>
   );
