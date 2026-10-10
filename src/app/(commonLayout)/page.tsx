@@ -653,108 +653,90 @@ const Page = async () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          STATS — Immersive gradient section
+          STATS + WHY US — Combined section
       ══════════════════════════════════════════════════════════ */}
-      <section className="py-32 relative overflow-hidden">
-        {/* Dramatic background */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Background */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/5 via-background to-primary/5" />
         <div className="absolute inset-0 -z-10">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-80 h-80
-                          bg-blue-500/10 rounded-full blur-[100px] animate-blob-slow" />
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80
-                          bg-violet-500/10 rounded-full blur-[100px] animate-blob"
-            style={{ animationDelay: "4s" }} />
+          <div className="absolute left-0 top-1/3 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] animate-blob-slow" />
+          <div className="absolute right-0 bottom-1/3 w-80 h-80 bg-violet-500/8 rounded-full blur-[100px] animate-blob" style={{ animationDelay: "4s" }} />
         </div>
-        <div className="absolute inset-0 -z-10 [background-image:radial-gradient(hsl(var(--border)/0.4)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]" />
 
         <div className="container mx-auto px-4 md:px-6">
 
-          <AnimatedSection className="text-center mb-20" direction="up">
-            <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tighter text-foreground mb-5">
-              Trusted by{" "}
-              <span className="text-shimmer">Developers Globally</span>
+          {/* ── Unified Heading ── */}
+          <AnimatedSection className="text-center mb-14" direction="up">
+            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full
+                            border border-primary/20 bg-primary/8 text-primary
+                            text-sm font-bold tracking-widest uppercase mb-5">
+              <Sparkles className="h-3.5 w-3.5 animate-glow-pulse" />
+              Why DevNexus
+            </div>
+            <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tighter text-foreground mb-4">
+              Trusted by <span className="text-shimmer">Developers Globally</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto font-medium">
-              Join a thriving community of engineers and learners who choose
-              quality content every day.
+              Join a thriving community of engineers and learners — built for serious developers, by serious developers.
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7 max-w-5xl mx-auto">
-            {stats.map((s, i) => (
-              <AnimatedSection key={i} delay={i * 120} direction="up">
-                <div className="group relative flex flex-col items-center text-center
-                                p-10 bg-card/80 backdrop-blur-sm rounded-[2.5rem]
-                                border border-border/50
-                                hover:border-primary/25 shadow-xl
-                                hover:shadow-2xl hover:shadow-primary/10
-                                transition-all duration-500 hover:-translate-y-3
-                                overflow-hidden">
-
-                  {/* Gradient bg on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-violet-500/5
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Top accent line */}
-                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${s.color}
-                                   opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                  {/* Icon ring */}
-                  <div className={`relative w-20 h-20 rounded-3xl flex items-center justify-center mb-7
-                                   bg-gradient-to-br ${s.color} shadow-2xl
-                                   group-hover:scale-110 group-hover:rotate-3
-                                   transition-all duration-500`}>
-                    <s.icon className="h-9 w-9 text-white" strokeWidth={1.5} />
-                    <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* ── Stats horizontal banner ── */}
+          <AnimatedSection direction="up" delay={100}>
+            <div className="relative rounded-[2rem] border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden shadow-2xl mb-8">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-violet-500 to-emerald-500" />
+              <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/40">
+                {stats.map((s, i) => (
+                  <div key={i} className="group relative flex items-center gap-6 px-10 py-9 hover:bg-primary/3 transition-colors duration-300 overflow-hidden">
+                    <div className={`absolute -top-8 -right-8 w-32 h-32 rounded-full bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500`} />
+                    <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${s.color} shadow-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <s.icon className="h-8 w-8 text-white" strokeWidth={1.5} />
+                    </div>
+                    <div className="relative z-10">
+                      <p className="text-4xl md:text-5xl font-extrabold tracking-tighter text-foreground leading-none mb-1">{s.value}</p>
+                      <p className="text-sm font-bold text-foreground/80 mb-0.5">{s.label}</p>
+                      <p className="text-xs text-muted-foreground font-medium">{s.sub}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
 
-                  {/* Number */}
-                  <h4 className="text-5xl md:text-6xl font-extrabold tracking-tighter text-foreground mb-2 relative z-10">
-                    {s.value}
-                  </h4>
-                  <p className="text-base font-bold text-foreground/70 mb-1 relative z-10">{s.label}</p>
-                  <p className="text-xs text-muted-foreground font-medium relative z-10">{s.sub}</p>
-
-                  {/* Corner decoration */}
-                  <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full
-                                  border border-border/30 opacity-0 group-hover:opacity-60
-                                  transition-all duration-500 group-hover:scale-110" />
+          {/* ── Feature 2×2 grid ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {[
+              { icon: BookOpen, title: "In-Depth Articles", desc: "Every piece is thoroughly researched and expertly written. No fluff — just deep, actionable knowledge you can apply immediately.", color: "from-blue-500 to-cyan-500", num: "01" },
+              { icon: Users, title: "Community Driven", desc: "Built by developers, for developers. We listen to our community and evolve together, creating content that truly matters.", color: "from-violet-500 to-purple-500", num: "02" },
+              { icon: TrendingUp, title: "Always Current", desc: "Stay ahead with content that keeps pace with the rapidly evolving tech landscape. New articles drop every single week.", color: "from-emerald-500 to-teal-500", num: "03" },
+              { icon: Globe, title: "Globally Accessible", desc: "Free, open content for every developer, regardless of where they are or what their background is. Knowledge for all.", color: "from-orange-500 to-rose-500", num: "04" },
+            ].map((f, i) => (
+              <AnimatedSection key={f.title} delay={i * 80} direction="up">
+                <div className="group relative p-7 rounded-2xl border border-border/40 bg-card
+                                hover:border-primary/25 hover:shadow-xl hover:shadow-primary/8
+                                transition-all duration-500 hover:-translate-y-1.5 h-full overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/4 via-transparent to-violet-500/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${f.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl`} />
+                  <div className="relative z-10 flex items-start gap-5">
+                    <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} shadow-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <f.icon className="h-5 w-5 text-white" strokeWidth={1.75} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-1.5">
+                        <h3 className="text-base font-extrabold text-foreground tracking-tight">{f.title}</h3>
+                        <span className="text-[10px] font-black text-muted-foreground/35 tracking-widest">{f.num}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{f.desc}</p>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-3 right-5 text-6xl font-black text-foreground/3 select-none pointer-events-none leading-none">
+                    {f.num}
+                  </div>
                 </div>
               </AnimatedSection>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          WHY US — Feature highlights strip
-      ══════════════════════════════════════════════════════════ */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-b from-muted/20 to-transparent">
-        <div className="container mx-auto px-4 md:px-6">
-          <AnimatedSection direction="up">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { icon: BookOpen, title: "In-Depth Articles", desc: "Every piece is thoroughly researched and expertly written for real value.", color: "from-blue-500 to-cyan-500" },
-                { icon: Users, title: "Community Driven", desc: "Built by developers, for developers. We listen and grow together.", color: "from-violet-500 to-purple-500" },
-                { icon: TrendingUp, title: "Always Current", desc: "Stay ahead with content that keeps pace with the evolving tech landscape.", color: "from-emerald-500 to-teal-500" },
-                { icon: Globe, title: "Globally Accessible", desc: "Free, open content for every developer, regardless of where they are.", color: "from-orange-500 to-rose-500" },
-              ].map((f, i) => (
-                <AnimatedSection key={f.title} delay={i * 80} direction="up">
-                  <div className="group p-8 rounded-3xl border border-border/40 bg-card
-                                  hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5
-                                  transition-all duration-500 hover:-translate-y-2 h-full">
-                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${f.color} shadow-lg
-                                     flex items-center justify-center mb-5
-                                     group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                      <f.icon className="h-5.5 w-5.5 text-white" strokeWidth={1.75} />
-                    </div>
-                    <h3 className="text-lg font-extrabold text-foreground tracking-tight mb-2">{f.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed font-medium">{f.desc}</p>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </AnimatedSection>
         </div>
       </section>
 
