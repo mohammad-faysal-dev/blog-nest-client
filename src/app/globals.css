@@ -343,11 +343,11 @@
 /* ── Shimmer gradient text ── */
 .text-shimmer {
   background: linear-gradient(110deg,
-      #7c3aed 0%,
-      #a855f7 25%,
-      #3b82f6 50%,
-      #a855f7 75%,
-      #7c3aed 100%);
+      #8B5CF6 0%,
+      #C084FC 25%,
+      #EC4899 50%,
+      #C084FC 75%,
+      #8B5CF6 100%);
   background-size: 300% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -357,7 +357,7 @@
 
 /* ── Gradient shifting heading text ── */
 .text-gradient {
-  background: linear-gradient(135deg, #7c3aed, #a855f7, #3b82f6);
+  background: linear-gradient(135deg, #8B5CF6, #C084FC, #EC4899);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -380,7 +380,7 @@
   position: absolute;
   inset: -1.5px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #7c3aed, #a855f7, #3b82f6, #7c3aed);
+  background: linear-gradient(135deg, #8B5CF6, #C084FC, #EC4899, #8B5CF6);
   background-size: 300% 300%;
   animation: gradient-shift 4s ease infinite;
   z-index: -1;
@@ -408,9 +408,9 @@
 /* ── Neon glow shadow ── */
 .shadow-neon {
   box-shadow:
-    0 0 15px rgba(124, 58, 237, 0.3),
-    0 0 40px rgba(124, 58, 237, 0.15),
-    0 8px 32px rgba(124, 58, 237, 0.1);
+    0 0 15px rgba(139, 92, 246, 0.3),
+    0 0 40px rgba(236, 72, 153, 0.15),
+    0 8px 32px rgba(139, 92, 246, 0.1);
 }
 
 /* ── Scrollbar hide ── */

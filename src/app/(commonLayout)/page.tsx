@@ -37,37 +37,37 @@ import {
 const categories = [
   {
     name: "Web Dev", icon: MonitorPlay, count: 42,
-    gradient: "from-[#3B82F6] to-[#06B6D4]",
-    bg: "bg-blue-500/10", tc: "text-blue-500",
-    ring: "ring-blue-500/20",
-  },
-  {
-    name: "AI & ML", icon: Cpu, count: 28,
     gradient: "from-[#8B5CF6] to-[#A855F7]",
     bg: "bg-violet-500/10", tc: "text-violet-500",
     ring: "ring-violet-500/20",
   },
   {
+    name: "AI & ML", icon: Cpu, count: 28,
+    gradient: "from-[#A855F7] to-[#C084FC]",
+    bg: "bg-purple-500/10", tc: "text-purple-500",
+    ring: "ring-purple-500/20",
+  },
+  {
     name: "Architecture", icon: Component, count: 19,
-    gradient: "from-[#10B981] to-[#14B8A6]",
-    bg: "bg-emerald-500/10", tc: "text-emerald-500",
-    ring: "ring-emerald-500/20",
+    gradient: "from-[#C084FC] to-[#EC4899]",
+    bg: "bg-fuchsia-500/10", tc: "text-fuchsia-500",
+    ring: "ring-fuchsia-500/20",
   },
   {
     name: "Security", icon: Shield, count: 15,
-    gradient: "from-[#F43F5E] to-[#EC4899]",
-    bg: "bg-rose-500/10", tc: "text-rose-500",
-    ring: "ring-rose-500/20",
+    gradient: "from-[#EC4899] to-[#F472B6]",
+    bg: "bg-pink-500/10", tc: "text-pink-500",
+    ring: "ring-pink-500/20",
   },
   {
     name: "Databases", icon: Database, count: 23,
-    gradient: "from-[#F59E0B] to-[#F97316]",
-    bg: "bg-amber-500/10", tc: "text-amber-500",
-    ring: "ring-amber-500/20",
+    gradient: "from-[#8B5CF6] to-[#EC4899]",
+    bg: "bg-violet-500/10", tc: "text-violet-500",
+    ring: "ring-violet-500/20",
   },
   {
     name: "Design", icon: Paintbrush, count: 31,
-    gradient: "from-[#EC4899] to-[#A855F7]",
+    gradient: "from-[#EC4899] to-[#8B5CF6]",
     bg: "bg-pink-500/10", tc: "text-pink-500",
     ring: "ring-pink-500/20",
   },
@@ -75,9 +75,9 @@ const categories = [
 
 /* ── Stats ── */
 const stats = [
-  { label: "Community Members", value: "15k+", icon: Users, sub: "Growing every day", color: "from-blue-500 to-cyan-500", glow: "blue" },
-  { label: "Monthly Views", value: "85k+", icon: Eye, sub: "Articles read per month", color: "from-violet-500 to-purple-500", glow: "violet" },
-  { label: "Expert Authors", value: "40+", icon: Award, sub: "Industry professionals", color: "from-emerald-500 to-teal-500", glow: "emerald" },
+  { label: "Community Members", value: "15k+", icon: Users, sub: "Growing every day", color: "from-[#8B5CF6] to-[#A855F7]", glow: "violet" },
+  { label: "Monthly Views", value: "85k+", icon: Eye, sub: "Articles read per month", color: "from-[#A855F7] to-[#EC4899]", glow: "purple" },
+  { label: "Expert Authors", value: "40+", icon: Award, sub: "Industry professionals", color: "from-[#EC4899] to-[#F472B6]", glow: "pink" },
 ];
 
 /* ── Ticker ── */
@@ -265,7 +265,7 @@ const Page = async () => {
           <div className="animate-slide-up flex flex-wrap justify-center gap-x-10 gap-y-2 mt-2" style={{ animationDelay: "380ms" }}>
             {stats.map((s) => (
               <div key={s.label} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span className="w-1 h-4 rounded-full bg-gradient-to-b from-primary to-violet-500 opacity-60" />
+                <span className="w-1 h-4 rounded-full bg-gradient-to-b from-[#8B5CF6] to-[#EC4899] opacity-60" />
                 <span className="font-extrabold text-foreground text-base">{s.value}</span>
                 <span className="font-medium">{s.label}</span>
               </div>
@@ -293,7 +293,7 @@ const Page = async () => {
         <div className="flex animate-ticker whitespace-nowrap select-none">
           {[...ticker, ...ticker].map((item, i) => (
             <span key={i} className="inline-flex items-center gap-4 px-8 text-sm font-bold text-muted-foreground/60 tracking-wide uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-violet-500 opacity-60 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] opacity-60 flex-shrink-0" />
               {item}
             </span>
           ))}
@@ -326,7 +326,7 @@ const Page = async () => {
                             hover:-translate-y-2 shine-hover">
 
               {/* Top gradient accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-violet-500 to-blue-500 z-10" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B5CF6] via-[#C084FC] to-[#EC4899] z-10" />
 
               <div className="grid md:grid-cols-[1.1fr_1fr]">
 
@@ -667,8 +667,8 @@ const Page = async () => {
         {/* Background */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-foreground/5 via-background to-primary/5" />
         <div className="absolute inset-0 -z-10">
-          <div className="absolute left-0 top-1/3 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] animate-blob-slow" />
-          <div className="absolute right-0 bottom-1/3 w-80 h-80 bg-violet-500/8 rounded-full blur-[100px] animate-blob" style={{ animationDelay: "4s" }} />
+          <div className="absolute left-0 top-1/3 -translate-y-1/2 w-80 h-80 bg-[rgba(139,92,246,0.12)] rounded-full blur-[100px] animate-blob-slow" />
+          <div className="absolute right-0 bottom-1/3 w-80 h-80 bg-[rgba(236,72,153,0.08)] rounded-full blur-[100px] animate-blob" style={{ animationDelay: "4s" }} />
         </div>
 
         <div className="container mx-auto px-4 md:px-6">
@@ -692,7 +692,7 @@ const Page = async () => {
           {/* ── Stats horizontal banner ── */}
           <AnimatedSection direction="up" delay={100}>
             <div className="relative rounded-[2rem] border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden shadow-2xl mb-8">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-violet-500 to-emerald-500" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B5CF6] via-[#C084FC] to-[#EC4899]" />
               <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/40">
                 {stats.map((s, i) => (
                   <div key={i} className="group relative flex items-center gap-6 px-10 py-9 hover:bg-primary/3 transition-colors duration-300 overflow-hidden">
@@ -714,10 +714,10 @@ const Page = async () => {
           {/* ── Feature 2×2 grid ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
-              { icon: BookOpen, title: "In-Depth Articles", desc: "Every piece is thoroughly researched and expertly written. No fluff — just deep, actionable knowledge you can apply immediately.", color: "from-blue-500 to-cyan-500", num: "01" },
-              { icon: Users, title: "Community Driven", desc: "Built by developers, for developers. We listen to our community and evolve together, creating content that truly matters.", color: "from-violet-500 to-purple-500", num: "02" },
-              { icon: TrendingUp, title: "Always Current", desc: "Stay ahead with content that keeps pace with the rapidly evolving tech landscape. New articles drop every single week.", color: "from-emerald-500 to-teal-500", num: "03" },
-              { icon: Globe, title: "Globally Accessible", desc: "Free, open content for every developer, regardless of where they are or what their background is. Knowledge for all.", color: "from-orange-500 to-rose-500", num: "04" },
+              { icon: BookOpen, title: "In-Depth Articles", desc: "Every piece is thoroughly researched and expertly written. No fluff — just deep, actionable knowledge you can apply immediately.", color: "from-[#8B5CF6] to-[#A855F7]", num: "01" },
+              { icon: Users, title: "Community Driven", desc: "Built by developers, for developers. We listen to our community and evolve together, creating content that truly matters.", color: "from-[#A855F7] to-[#C084FC]", num: "02" },
+              { icon: TrendingUp, title: "Always Current", desc: "Stay ahead with content that keeps pace with the rapidly evolving tech landscape. New articles drop every single week.", color: "from-[#C084FC] to-[#EC4899]", num: "03" },
+              { icon: Globe, title: "Globally Accessible", desc: "Free, open content for every developer, regardless of where they are or what their background is. Knowledge for all.", color: "from-[#EC4899] to-[#F472B6]", num: "04" },
             ].map((f, i) => (
               <AnimatedSection key={f.title} delay={i * 80} direction="up">
                 <div className="group relative p-7 rounded-2xl border border-border/40 bg-card
@@ -765,10 +765,10 @@ const Page = async () => {
 
               {/* Animated background blobs */}
               <div className="absolute -top-20 -right-20 w-[450px] h-[450px]
-                              rounded-full bg-gradient-to-bl from-primary/30 to-violet-600/20
+                              rounded-full bg-gradient-to-bl from-[rgba(139,92,246,0.30)] to-[rgba(236,72,153,0.20)]
                               blur-[140px] animate-blob-slow pointer-events-none" />
               <div className="absolute -bottom-20 -left-20 w-[350px] h-[350px]
-                              rounded-full bg-gradient-to-tr from-blue-600/20 to-cyan-500/15
+                              rounded-full bg-gradient-to-tr from-[rgba(236,72,153,0.20)] to-[rgba(192,132,252,0.15)]
                               blur-[120px] animate-blob pointer-events-none"
                 style={{ animationDelay: "4s" }} />
 

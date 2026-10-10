@@ -11,28 +11,28 @@ const faqs = [
         answer:
             "We publish high-quality technical articles, tutorials, and insights every week, ensuring you stay up to date with the fast-paced tech world.",
         tag: "Content",
-        tagColor: "bg-blue-500/10 text-blue-500",
+        tagColor: "bg-violet-500/10 text-violet-500",
     },
     {
         question: "Can I contribute to the blog?",
         answer:
             "Absolutely! We're always looking for passionate developers and industry experts to share their knowledge. Submit a proposal and our editorial team will review it.",
         tag: "Community",
-        tagColor: "bg-violet-500/10 text-violet-500",
+        tagColor: "bg-purple-500/10 text-purple-500",
     },
     {
         question: "Who is the content for?",
         answer:
             "Our content caters to all levels, from beginner tutorials to advanced system design and architecture deep dives. There's something for everyone.",
         tag: "Audience",
-        tagColor: "bg-emerald-500/10 text-emerald-500",
+        tagColor: "bg-fuchsia-500/10 text-fuchsia-500",
     },
     {
         question: "Is the content free to read?",
         answer:
             "Yes! All our articles and tutorials are completely free. We believe great knowledge should be accessible to every developer around the world.",
         tag: "Pricing",
-        tagColor: "bg-amber-500/10 text-amber-500",
+        tagColor: "bg-pink-500/10 text-pink-500",
     },
 ];
 
@@ -99,7 +99,7 @@ export function FaqSection() {
                               blur-[60px] group-hover:bg-primary/14 transition-colors duration-500" />
                             {/* Top accent */}
                             <div className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl
-                              bg-gradient-to-r from-primary via-violet-500 to-blue-500
+                              bg-gradient-to-r from-[#8B5CF6] via-[#C084FC] to-[#EC4899]
                               opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                             <div className="relative z-10">
@@ -132,8 +132,8 @@ export function FaqSection() {
                         {/* Mini stat cards */}
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { val: "15k+", lbl: "Members", sub: "Active devs", color: "from-blue-500 to-cyan-500" },
-                                { val: "40+", lbl: "Contributors", sub: "Expert authors", color: "from-violet-500 to-purple-500" },
+                                { val: "15k+", lbl: "Members", sub: "Active devs", color: "from-[#8B5CF6] to-[#A855F7]" },
+                                { val: "40+", lbl: "Contributors", sub: "Expert authors", color: "from-[#EC4899] to-[#F472B6]" },
                             ].map((s) => (
                                 <div
                                     key={s.lbl}
