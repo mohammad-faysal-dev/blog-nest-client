@@ -122,8 +122,8 @@ const Page = async () => {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_60%,transparent_100%)] opacity-80" />
 
           {/* Central strong glowing spots (Violet & Indigo) */}
-          <div className="absolute left-1/2 top-[30%] h-[30rem] w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(124,58,237,0.28)] blur-[120px] animate-pulse-ring" />
-          <div className="absolute left-1/2 top-[50%] h-[20rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(99,102,241,0.22)] blur-[100px] animate-blob" />
+          <div className="absolute left-1/2 top-[30%] h-[30rem] w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(124,58,237,0.12)] blur-[130px] animate-pulse-ring" />
+          <div className="absolute left-1/2 top-[50%] h-[20rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(99,102,241,0.09)] blur-[110px] animate-blob" />
 
           {/* Twinkling Stars */}
           {[
@@ -427,10 +427,9 @@ const Page = async () => {
       )}
 
       {/* ══════════════════════════════════════════════════════════
-          CATEGORIES — Stunning gradient cards with hover lift
+          CATEGORIES — Horizontal card grid
       ══════════════════════════════════════════════════════════ */}
-      <section className="py-32 relative overflow-hidden">
-        {/* Section background */}
+      <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-muted/30 to-transparent" />
         <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[900px] h-[350px]
                         bg-gradient-to-b from-primary/6 to-transparent rounded-full
@@ -439,14 +438,14 @@ const Page = async () => {
         <div className="container mx-auto px-4 md:px-6">
 
           {/* Heading */}
-          <AnimatedSection className="text-center mb-20" direction="up">
+          <AnimatedSection className="text-center mb-14" direction="up">
             <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full
                             border border-primary/20 bg-primary/8 text-primary
                             text-sm font-bold tracking-widest uppercase mb-6">
               <Sparkles className="h-3.5 w-3.5 animate-glow-pulse" />
               Browse Topics
             </div>
-            <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tighter text-foreground mb-5">
+            <h2 className="text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tighter text-foreground mb-4">
               Explore by <span className="text-gradient">Category</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium leading-relaxed">
@@ -455,36 +454,44 @@ const Page = async () => {
             </p>
           </AnimatedSection>
 
-          {/* Category grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+          {/* 3×2 horizontal card grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map((cat, i) => (
               <AnimatedSection key={cat.name} delay={i * 70} direction="up">
                 <Link href={`/blogs?category=${encodeURIComponent(cat.name)}`}>
-                  <div className={`card-gradient-border group h-full flex flex-col items-center
-                                   text-center p-7 cursor-pointer overflow-hidden
-                                   transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl`}>
+                  <div className="group relative flex items-center gap-5 p-5 rounded-2xl
+                                  border border-border/50 bg-card cursor-pointer overflow-hidden
+                                  hover:border-transparent hover:shadow-xl
+                                  transition-all duration-400 hover:-translate-y-1">
 
-                    {/* Icon with gradient bg */}
-                    <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center mb-5
-                                     bg-gradient-to-br ${cat.gradient} shadow-xl
-                                     group-hover:scale-115 group-hover:rotate-6
-                                     transition-all duration-500`}>
-                      <cat.icon className="h-7 w-7 text-white" strokeWidth={1.75} />
-                      {/* Shine overlay */}
-                      <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Hover gradient background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover:opacity-8 transition-opacity duration-400`} />
+                    {/* Left gradient border on hover */}
+                    <div className={`absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b ${cat.gradient} rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400`} />
+
+                    {/* Icon */}
+                    <div className={`relative flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center
+                                     bg-gradient-to-br ${cat.gradient} shadow-lg
+                                     group-hover:scale-110 group-hover:rotate-3 transition-all duration-400`}>
+                      <cat.icon className="h-6 w-6 text-white" strokeWidth={1.75} />
+                      <div className="absolute inset-0 rounded-xl bg-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                     </div>
 
-                    <h3 className="font-extrabold text-sm text-foreground tracking-tight leading-tight mb-1.5">
-                      {cat.name}
-                    </h3>
-                    <p className={`text-xs font-bold mb-3 ${cat.tc}`}>{cat.count} articles</p>
+                    {/* Text */}
+                    <div className="flex-1 min-w-0 relative z-10">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="font-extrabold text-base text-foreground tracking-tight group-hover:text-foreground transition-colors">
+                          {cat.name}
+                        </h3>
+                        <span className={`flex-shrink-0 text-xs font-bold px-2.5 py-1 rounded-full ${cat.bg} ${cat.tc}`}>
+                          {cat.count}
+                        </span>
+                      </div>
+                      <p className={`text-xs font-semibold mt-0.5 ${cat.tc} opacity-75`}>articles available</p>
+                    </div>
 
                     {/* Arrow */}
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center
-                                    ${cat.bg} ring-1 ${cat.ring}
-                                    group-hover:scale-110 transition-all duration-300`}>
-                      <ArrowRight className={`h-3.5 w-3.5 ${cat.tc} transition-transform duration-300 group-hover:translate-x-0.5`} />
-                    </div>
+                    <ArrowRight className={`flex-shrink-0 h-4 w-4 ${cat.tc} opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300`} />
                   </div>
                 </Link>
               </AnimatedSection>
@@ -492,6 +499,7 @@ const Page = async () => {
           </div>
         </div>
       </section>
+
 
       {/* ══════════════════════════════════════════════════════════
           RECENT ARTICLES — Premium card grid
