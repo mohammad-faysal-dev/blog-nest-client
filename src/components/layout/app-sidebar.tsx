@@ -3,7 +3,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -11,7 +10,7 @@ import {
 import { adminRoutes } from "@/routes/adminRoutes";
 import { userRoutes } from "@/routes/userRoutes";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   PenSquare,
@@ -21,8 +20,11 @@ import {
   LogOut,
   Settings,
   Feather,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
 
 // Map route titles to lucide icons
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -44,6 +46,20 @@ type AppSidebarProps = {
 
 export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
+    setIsSigningOut(false);
+  };
   const routes = user.role === "admin" ? adminRoutes : userRoutes;
   const dashboardHref = user.role === "admin" ? "/admin-dashboard" : "/dashboard";
 
@@ -164,10 +180,14 @@ export function AppSidebar({ user }: AppSidebarProps) {
             </p>
           </div>
           <button
-            className="shrink-0 text-neutral-500 hover:text-red-400 transition-colors"
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+            className="shrink-0 text-neutral-500 hover:text-red-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             title="Sign out"
           >
-            <LogOut className="h-4 w-4" />
+            {isSigningOut
+              ? <Loader2 className="h-4 w-4 animate-spin" />
+              : <LogOut className="h-4 w-4" />}
           </button>
         </div>
       </div>
