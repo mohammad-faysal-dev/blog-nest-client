@@ -1,8 +1,4 @@
 
-<p align="center">
-  <img src="./public/banner-readme.png" alt="Blog Nest Banner" width="100%" />
-</p>
-
 <h1 align="center">📝 Blog Nest — Client</h1>
 
 <p align="center">
@@ -19,14 +15,6 @@
 </p>
 
 <br />
-
----
-
-## 📸 Preview
-
-<p align="center">
-  <img src="./public/features-readme.png" alt="App Features Preview" width="100%" />
-</p>
 
 ---
 
