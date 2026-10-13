@@ -3,10 +3,10 @@
   <img src="./public/banner-readme.png" alt="Blog Nest Banner" width="100%" />
 </p>
 
-<h1 align="center">📝 Blog Nest Client</h1>
+<h1 align="center">📝 Blog Nest — Client</h1>
 
 <p align="center">
-  <em>A modern, full-featured blogging platform with role-based dashboards, server-side rendering, and a seamless user experience — built with the latest Next.js App Router.</em>
+  <em>A production-grade blogging platform built on Next.js App Router — with role-based dashboards, server-side rendering, type-safe forms, and a premium UI out of the box.</em>
 </p>
 
 <p align="center">
@@ -15,14 +15,14 @@
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" /></a>
   <a href="https://www.better-auth.com/"><img src="https://img.shields.io/badge/Better_Auth-1.7-7C3AED?style=flat-square&logo=shield&logoColor=white" alt="Better Auth" /></a>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License" />
+  <img src="https://img.shields.io/badge/license-MIT-22c55e?style=flat-square" alt="MIT License" />
 </p>
 
 <br />
 
 ---
 
-## 📸 Screenshots
+## 📸 Preview
 
 <p align="center">
   <img src="./public/features-readme.png" alt="App Features Preview" width="100%" />
@@ -37,7 +37,7 @@
 - [📁 Project Structure](#-project-structure)
 - [🚀 Getting Started](#-getting-started)
 - [⚙️ Environment Variables](#️-environment-variables)
-- [📜 Scripts](#-scripts)
+- [📜 Available Scripts](#-available-scripts)
 - [🔐 Auth & Role-Based Routing](#-auth--role-based-routing)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
@@ -46,52 +46,19 @@
 
 ## ✨ Features
 
-<table>
-  <tr>
-    <td>🔐 <strong>Authentication</strong></td>
-    <td>Secure session-based login & signup powered by <a href="https://better-auth.com">Better Auth</a></td>
-  </tr>
-  <tr>
-    <td>🛡️ <strong>Role-Based Access</strong></td>
-    <td>Separate <code>admin</code> & <code>user</code> dashboards with middleware-level route guarding</td>
-  </tr>
-  <tr>
-    <td>📝 <strong>Blog Management</strong></td>
-    <td>Create, browse, and manage blog posts with rich UI cards & metadata</td>
-  </tr>
-  <tr>
-    <td>📚 <strong>Post History</strong></td>
-    <td>Users can view their own published blog post history at a glance</td>
-  </tr>
-  <tr>
-    <td>🧭 <strong>Parallel Routes</strong></td>
-    <td>Next.js App Router <code>@admin</code> / <code>@user</code> slots for role-aware layouts</td>
-  </tr>
-  <tr>
-    <td>⚡ <strong>Server Components</strong></td>
-    <td>Maximizes performance with React Server Components and streaming</td>
-  </tr>
-  <tr>
-    <td>🎨 <strong>shadcn/ui</strong></td>
-    <td>Accessible, pre-built components — Sidebar, Cards, Badges, Tables, Forms</td>
-  </tr>
-  <tr>
-    <td>📋 <strong>Type-safe Forms</strong></td>
-    <td>Forms built with <code>@tanstack/react-form</code> and validated using <code>Zod v4</code></td>
-  </tr>
-  <tr>
-    <td>🔔 <strong>Toast Notifications</strong></td>
-    <td>Elegant, non-intrusive feedback via <a href="https://sonner.emilkowal.ski">Sonner</a></td>
-  </tr>
-  <tr>
-    <td>🌙 <strong>Dark Mode</strong></td>
-    <td>Full light/dark theme support with <code>next-themes</code></td>
-  </tr>
-  <tr>
-    <td>🔒 <strong>Type-safe Env</strong></td>
-    <td>Environment variables validated at startup using <code>@t3-oss/env-nextjs</code></td>
-  </tr>
-</table>
+| Feature | Description |
+|---|---|
+| 🔐 **Authentication** | Secure, session-based login & signup powered by [Better Auth](https://better-auth.com) |
+| 🛡️ **Role-Based Access** | Separate `admin` & `user` dashboards with middleware-level route protection |
+| 📝 **Blog Management** | Create, browse, and manage posts with rich UI cards & metadata |
+| 📚 **Post History** | Users can review all their published posts in one place |
+| 🧭 **Parallel Routes** | Next.js `@admin` / `@user` slots for clean, role-aware layouts — no client-side conditionals |
+| ⚡ **Server Components** | Maximizes performance via React Server Components and streaming |
+| 🎨 **shadcn/ui** | Accessible, pre-built components — Sidebar, Cards, Badges, Tables, Forms |
+| 📋 **Type-safe Forms** | Built with `@tanstack/react-form` and validated end-to-end with `Zod v4` |
+| 🔔 **Toast Notifications** | Elegant, non-intrusive user feedback via [Sonner](https://sonner.emilkowal.ski) |
+| 🌙 **Dark Mode** | First-class light/dark theme support with `next-themes` |
+| 🔒 **Type-safe Env** | Environment variables validated at startup via `@t3-oss/env-nextjs` + Zod |
 
 ---
 
@@ -99,11 +66,11 @@
 
 | Layer | Technology | Version |
 |---|---|---|
-| **Framework** | [Next.js](https://nextjs.org/) (App Router) | `16.3.1` |
+| **Framework** | [Next.js](https://nextjs.org/) — App Router | `16.3.1` |
 | **UI Library** | [React](https://react.dev/) | `19.x` |
 | **Language** | [TypeScript](https://www.typescriptlang.org/) | `5.x` |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com/) | `v4` |
-| **Components** | [shadcn/ui](https://ui.shadcn.com/), [Base UI](https://base-ui.com/) | latest |
+| **Components** | [shadcn/ui](https://ui.shadcn.com/) · [Base UI](https://base-ui.com/) | latest |
 | **Auth** | [Better Auth](https://www.better-auth.com/) | `1.7.x` |
 | **Forms** | [@tanstack/react-form](https://tanstack.com/form) | `1.33.x` |
 | **Tables** | [@tanstack/react-table](https://tanstack.com/table) | `9.x` |
@@ -120,63 +87,55 @@
 ```
 blog-nest-client/
 │
-├── 📂 public/                        # Static assets (images, icons, etc.)
+├── 📂 public/                        # Static assets
 │
-├── 📂 src/
-│   │
-│   ├── 📂 app/
-│   │   ├── 📂 (commonLayout)/        # ─── Public Pages ───────────────────
-│   │   │   ├── page.tsx              #  🏠  Home / Blog Listing Page
-│   │   │   ├── blogs/                #  📰  Blog Detail Pages
-│   │   │   ├── about/                #  ℹ️   About Page
-│   │   │   ├── login/                #  🔑  Login Page
-│   │   │   └── signup/               #  📝  Signup Page
-│   │   │
-│   │   └── 📂 (dashboardLayout)/     # ─── Protected Dashboard ─────────────
-│   │       ├── layout.tsx            #  🧱  Dashboard Shell (Sidebar + Auth)
-│   │       ├── 📂 @admin/            #  👑  Admin Parallel Route Slot
-│   │       │   └── admin-dashboard/  #     Admin Dashboard Page
-│   │       └── 📂 @user/             #  👤  User Parallel Route Slot
-│   │           └── dashboard/        #     User Dashboard
-│   │               ├── page.tsx      #     Dashboard Home
-│   │               ├── create-blog/  #  ✏️   Create New Post
-│   │               └── history/      #  🕒  My Blog History
-│   │
-│   ├── 📂 components/
-│   │   ├── layout/                   # Navbar, Sidebar, Footer
-│   │   ├── modules/                  # Feature components (BlogCard, Forms)
-│   │   └── ui/                       # Base UI components (shadcn)
-│   │
-│   ├── 📂 actions/                   # Next.js Server Actions
-│   ├── 📂 services/                  # API communication layer
-│   ├── 📂 hooks/                     # Custom React hooks
-│   ├── 📂 lib/                       # Utility / helper functions
-│   ├── 📂 types/                     # Shared TypeScript types
-│   ├── 📂 routes/                    # Route path constants
-│   ├── 📂 constants/                 # App-wide constants (Roles, etc.)
-│   ├── 📂 providers/                 # React Context Providers
-│   ├── proxy.ts                      # Middleware route guard logic
-│   └── env.ts                        # Type-safe env variable config
-│
-├── components.json                   # shadcn/ui config
-├── next.config.ts
-├── tailwind.config.ts
-└── tsconfig.json
+└── 📂 src/
+    ├── 📂 app/
+    │   ├── 📂 (commonLayout)/        # ── Public Pages ──────────────────────────
+    │   │   ├── page.tsx              #  🏠  Home / Blog Listing
+    │   │   ├── blogs/                #  📰  Blog Detail Pages  
+    │   │   ├── about/                #  ℹ️   About Page
+    │   │   ├── login/                #  🔑  Login
+    │   │   └── signup/               #  📝  Sign Up
+    │   │
+    │   └── 📂 (dashboardLayout)/     # ── Protected Dashboard ───────────────────
+    │       ├── layout.tsx            #  🧱  Dashboard Shell (Sidebar + Auth Guard)
+    │       ├── 📂 @admin/            #  👑  Admin Parallel Route Slot
+    │       │   └── admin-dashboard/  #      Admin Dashboard Page
+    │       └── 📂 @user/             #  👤  User Parallel Route Slot
+    │           └── dashboard/
+    │               ├── page.tsx      #      Dashboard Home
+    │               ├── create-blog/  #  ✏️   Create New Post
+    │               └── history/      #  🕒  My Blog History
+    │
+    ├── 📂 components/
+    │   ├── layout/                   #  Navbar · Sidebar · Footer
+    │   ├── modules/                  #  Feature components (BlogCard, Forms…)
+    │   └── ui/                       #  Base UI primitives (shadcn)
+    │
+    ├── 📂 actions/                   #  Next.js Server Actions
+    ├── 📂 services/                  #  API communication layer
+    ├── 📂 hooks/                     #  Custom React hooks
+    ├── 📂 lib/                       #  Utility & helper functions
+    ├── 📂 types/                     #  Shared TypeScript types
+    ├── 📂 routes/                    #  Route path constants
+    ├── 📂 constants/                 #  App-wide constants (Roles, etc.)
+    ├── 📂 providers/                 #  React Context Providers
+    ├── proxy.ts                      #  Middleware route guard logic
+    └── env.ts                        #  Type-safe env variable config
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### ✅ Prerequisites
+### Prerequisites
 
-Ensure the following are installed on your machine:
-
-| Tool | Version |
+| Tool | Requirement |
 |---|---|
 | [Node.js](https://nodejs.org/) | `>= 18.x` |
-| [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/) | latest |
-| **Blog Nest Backend** | Running locally on a port |
+| npm / [pnpm](https://pnpm.io/) | latest |
+| **Blog Nest Backend** | Running locally (see backend repo) |
 
 ---
 
@@ -191,29 +150,30 @@ cd blog-nest-client
 
 ```bash
 npm install
-# or
+# or, if you prefer pnpm
 pnpm install
 ```
 
 ### 3️⃣ Configure Environment Variables
 
-Create a `.env` file in the root and fill in your values:
+Copy the example below into a new `.env` file at the project root:
 
 ```env
-# Base URL of your NestJS backend server
+# Base URL of your NestJS backend
 BACKEND_URL=http://localhost:5000
 
 # Public URL of this Next.js frontend
 FRONTEND_URL=http://localhost:3000
 
-# API base URL (backend + /api prefix)
+# Full API endpoint base (backend + /api prefix)
 API_URL=http://localhost:5000/api
 
-# Authentication endpoint
+# Auth service base URL
 AUTH_URL=http://localhost:3000
 ```
 
-> ⚠️ **Note:** All env variables are validated at build/runtime using `@t3-oss/env-nextjs` + Zod. Missing or malformed values will **crash the app on startup** — this is intentional and prevents misconfiguration.
+> ⚠️ **Important:** All variables are validated at startup using `@t3-oss/env-nextjs` + Zod.  
+> A missing or malformed value will **crash the app intentionally** — this prevents silent misconfiguration in production.
 
 ### 4️⃣ Start the Development Server
 
@@ -221,87 +181,89 @@ AUTH_URL=http://localhost:3000
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser. 🎉
+Open [http://localhost:3000](http://localhost:3000) and you're live. 🎉
 
 ---
 
 ## ⚙️ Environment Variables
 
 | Variable | Required | Description |
-|---|---|---|
-| `BACKEND_URL` | ✅ Yes | Base URL of the NestJS backend |
-| `FRONTEND_URL` | ✅ Yes | Public URL of this Next.js app |
-| `API_URL` | ✅ Yes | Full API endpoint base |
-| `AUTH_URL` | ✅ Yes | Auth service base URL |
+|---|:---:|---|
+| `BACKEND_URL` | ✅ | Base URL of the NestJS backend server |
+| `FRONTEND_URL` | ✅ | Public URL of this Next.js frontend |
+| `API_URL` | ✅ | Full API endpoint base (`BACKEND_URL + /api`) |
+| `AUTH_URL` | ✅ | Auth service base URL (usually same as `FRONTEND_URL`) |
 
 ---
 
-## 📜 Scripts
+## 📜 Available Scripts
 
-| Command | Description |
+| Command | What it does |
 |---|---|
-| `npm run dev` | 🔥 Start development server with hot-reload |
-| `npm run build` | 📦 Build the app for production |
-| `npm start` | 🚀 Run the production build |
-| `npm run lint` | 🔍 Lint codebase with ESLint |
+| `npm run dev` | 🔥 Start the dev server with hot-reload |
+| `npm run build` | 📦 Build the optimized production bundle |
+| `npm start` | 🚀 Serve the production build |
+| `npm run lint` | 🔍 Run ESLint across the codebase |
 
 ---
 
 ## 🔐 Auth & Role-Based Routing
 
-Authentication is handled by **Better Auth** with session cookies. Route protection is enforced at the **middleware level** via `src/proxy.ts`.
+Authentication is handled by **Better Auth** using HTTP-only session cookies.  
+Route protection is enforced at the **middleware level** in `src/proxy.ts` — before any page ever renders.
 
 ```
 Request ──▶ Middleware (proxy.ts)
                │
-               ├─ Not authenticated? ──▶ Redirect → /login
-               │
-               ├─ Role: user  + path /admin-dashboard ──▶ Redirect → /dashboard
-               │
-               └─ Role: admin + path /dashboard ──▶ Redirect → /admin-dashboard
+               ├─ Unauthenticated?           ──▶ /login
+               ├─ Role: user  → /admin-dashboard  ──▶ /dashboard
+               └─ Role: admin → /dashboard         ──▶ /admin-dashboard
 ```
 
 ### Route Access Matrix
 
 | Route | 🌐 Public | 👤 User | 👑 Admin |
 |---|:---:|:---:|:---:|
-| `/` , `/blogs`, `/about` | ✅ | ✅ | ✅ |
-| `/login` , `/signup` | ✅ | ↩️ redirect | ↩️ redirect |
+| `/` · `/blogs` · `/about` | ✅ | ✅ | ✅ |
+| `/login` · `/signup` | ✅ | ↩️ redirect | ↩️ redirect |
 | `/dashboard` | ❌ | ✅ | ↩️ redirect |
 | `/admin-dashboard` | ❌ | ↩️ redirect | ✅ |
 
-### Role-Specific Dashboard Views (Parallel Routes)
+### Parallel Routes — Role-Aware Layouts
 
-The dashboard uses Next.js **Parallel Routes** (`@user` / `@admin` slots) to render completely different UI based on the authenticated user's role — without any client-side conditionals leaking into the page components.
+The dashboard leverages Next.js **Parallel Routes** (`@user` / `@admin` slots) to render entirely different UIs per role — with zero client-side conditionals bleeding into page components. Clean architecture by design.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, bug reports, and feature requests are welcome!
+Contributions, bug reports, and feature requests are always welcome!
 
-1. **Fork** the repository
-2. **Create** your branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m 'feat: add amazing feature'`
-4. **Push** to the branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request 🚀
+```bash
+# 1. Fork the repo and create your feature branch
+git checkout -b feature/your-feature-name
 
-Please make sure to:
-- Follow existing code style
-- Pass all lint checks (`npm run lint`)
-- Write meaningful commit messages
+# 2. Commit your changes with a clear message
+git commit -m "feat: add your feature description"
+
+# 3. Push and open a Pull Request
+git push origin feature/your-feature-name
+```
+
+Please ensure your PR:
+- ✅ Follows the existing code style
+- ✅ Passes all lint checks (`npm run lint`)
+- ✅ Has a clear, descriptive title and description
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+Licensed under the **MIT License** — free to use, modify, and distribute.  
+See the [LICENSE](./LICENSE) file for details.
 
 ```
 MIT License © 2026 — Blog Nest
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software to use, copy, modify, merge, publish, distribute, and/or
-sell copies — subject to the above copyright notice.
 ```
 
 ---
