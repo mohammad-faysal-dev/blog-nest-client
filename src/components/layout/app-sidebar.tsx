@@ -19,12 +19,12 @@ import {
   Home,
   LogOut,
   Settings,
-  Feather,
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+import { Logo } from "./Logo";
 
 // Map route titles to lucide icons
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -67,15 +67,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
     <Sidebar className="border-r border-white/10 bg-black/50 backdrop-blur-2xl text-white shadow-[4px_0_30px_rgba(0,0,0,0.4)] flex flex-col">
       {/* ── Logo / Brand ── */}
       <div className="flex h-16 items-center px-5 border-b border-white/10 shrink-0">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 shadow-[0_0_18px_rgba(6,182,212,0.5)] group-hover:shadow-[0_0_24px_rgba(6,182,212,0.7)] transition-all duration-300">
-            <Feather className="h-5 w-5 text-white" />
-            <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-black/50" />
-          </div>
-          <span className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-neutral-200 to-neutral-400">
-            BlogNest
-          </span>
-        </Link>
+        <Logo size="sm" />
       </div>
 
       {/* ── Main navigation ── */}

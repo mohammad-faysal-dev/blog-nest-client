@@ -6,13 +6,12 @@ import {
     Share2,
     Mail,
     MapPin,
-    Phone,
     ArrowUpRight,
-    Flame,
     Send
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Logo } from './Logo';
 
 export function Footer() {
     return (
@@ -26,14 +25,7 @@ export function Footer() {
 
                     {/* 1. Brand & Description Column (4 cols) */}
                     <div className="lg:col-span-4 space-y-6">
-                        <Link href="/" className="inline-flex items-center gap-2.5 group">
-                            <div className="bg-gradient-to-br from-primary to-purple-600 p-2.5 rounded-2xl shadow-lg shadow-primary/25 group-hover:scale-105 transition-transform duration-300">
-                                <Flame className="h-6 w-6 text-primary-foreground" />
-                            </div>
-                            <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-                                DevLogs
-                            </span>
-                        </Link>
+                        <Logo size="lg" className="inline-flex" />
 
                         <p className="text-muted-foreground text-sm leading-relaxed max-w-sm font-normal">
                             Empowering developers with cutting-edge tutorials, expert insights, and open-source contributions. Build the future with us.
@@ -140,7 +132,7 @@ export function Footer() {
 
                 {/* Bottom Bar: Copyright & Legal */}
                 <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-muted-foreground">
-                    <p>© {new Date().getFullYear()} DevLogs Inc. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} DevNexus Inc. All rights reserved.</p>
 
                     <div className="flex items-center gap-6">
                         <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>

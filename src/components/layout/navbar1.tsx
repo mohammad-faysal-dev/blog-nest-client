@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, Code2 } from "lucide-react";
+import { Menu } from "lucide-react";
+import { Logo } from "./Logo";
 import {
   Accordion,
   AccordionContent,
@@ -80,14 +81,7 @@ const Navbar1 = ({
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-primary to-purple-600 text-white shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300 group-hover:-translate-y-0.5">
-              <Code2 className="h-5 w-5" />
-            </div>
-            <span className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 group-hover:to-primary transition-all duration-300">
-              DevNexus
-            </span>
-          </Link>
+          <Logo size="md" />
 
           {/* Desktop Menu */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -150,14 +144,7 @@ const Navbar1 = ({
               <SheetContent side="right" className="w-[300px] sm:w-[350px] border-l-border/50 bg-background/95 backdrop-blur-xl">
                 <SheetHeader className="mb-8 text-left">
                   <SheetTitle>
-                    <Link href="/" className="flex items-center gap-2">
-                      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-gradient-to-br from-primary to-purple-600 text-white shadow-lg">
-                        <Code2 className="h-4 w-4" />
-                      </div>
-                      <span className="text-xl font-extrabold tracking-tight">
-                        DevNexus
-                      </span>
-                    </Link>
+                    <Logo size="sm" />
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6">
