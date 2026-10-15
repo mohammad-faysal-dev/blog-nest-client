@@ -100,13 +100,13 @@ const trustBadges = [
 const Page = async () => {
   const [featuredRes, recentRes] = await Promise.all([
     blogService.getBlogPosts({ limit: "2", isFeatured: true }, { revalidate: 30 }),
-    blogService.getBlogPosts({ limit: "6" }, { revalidate: 10 }),
+    blogService.getBlogPosts({ limit: "3" }, { revalidate: 10 }),
   ]);
 
   const featured = featuredRes?.data?.data || [];
   const recent = recentRes?.data?.data || [];
   const heroPost = featured[0] || recent[0];
-  const gridPosts = recent.slice(0, 6);
+  const gridPosts = recent.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans overflow-x-hidden">
@@ -305,122 +305,185 @@ const Page = async () => {
       ══════════════════════════════════════════════════════════ */}
       {heroPost && (
         <AnimatedSection className="container mx-auto px-4 md:px-6 py-24" direction="up">
-          {/* Section label */}
-          <div className="flex items-center gap-4 mb-12">
-            <div className="flex items-center gap-2.5 px-5 py-2 rounded-full
-                            bg-gradient-to-r from-orange-500/15 to-red-500/10
-                            border border-orange-500/20">
-              <Flame className="h-4 w-4 text-orange-500 animate-glow-pulse" />
-              <span className="text-sm font-extrabold text-orange-500 tracking-widest uppercase">
-                Editor's Pick
+
+          {/* ── Section Label ── */}
+          <div className="flex items-center gap-5 mb-14">
+            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full
+                            bg-gradient-to-r from-orange-500/20 to-amber-500/10
+                            border border-orange-500/25 shadow-lg shadow-orange-500/10">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-500" />
+              </span>
+              <Flame className="h-4 w-4 text-orange-500" />
+              <span className="text-sm font-black text-orange-500 tracking-[0.2em] uppercase">
+                Editor&#39;s Pick
               </span>
             </div>
-            <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
+            <div className="h-px flex-1 bg-gradient-to-r from-orange-500/30 via-border/50 to-transparent" />
+            <span className="text-xs font-bold text-muted-foreground/50 tracking-widest uppercase hidden sm:block">Curated for you</span>
           </div>
 
+          {/* ── Card ── */}
           <Link href={`/blogs/${heroPost.id}`} className="group block">
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-border/40
-                            bg-card shadow-2xl transition-all duration-700
-                            hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.15)]
-                            dark:hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.5)]
-                            hover:-translate-y-2 shine-hover">
+            <div className="relative rounded-[2.5rem] overflow-hidden
+                            border border-border/30
+                            bg-card
+                            shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]
+                            dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)]
+                            transition-all duration-700
+                            hover:shadow-[0_50px_100px_-20px_rgba(139,92,246,0.2)]
+                            dark:hover:shadow-[0_50px_100px_-20px_rgba(139,92,246,0.35)]
+                            hover:-translate-y-2">
 
-              {/* Top gradient accent line */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B5CF6] via-[#C084FC] to-[#EC4899] z-10" />
+              {/* Animated gradient border accent */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#8B5CF6] via-[#EC4899] to-[#F59E0B] z-20 opacity-90" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#8B5CF6] via-[#EC4899] to-[#F59E0B] z-20 blur-sm opacity-60" />
 
-              <div className="grid md:grid-cols-[1.1fr_1fr]">
+              <div className="grid md:grid-cols-[1.15fr_0.85fr]">
 
-                {/* ─── Image ─── */}
-                <div className="relative h-[300px] md:h-[540px] overflow-hidden bg-muted">
+                {/* ── Image Panel ── */}
+                <div className="relative h-[320px] md:h-[560px] overflow-hidden bg-muted">
                   <Image
                     src={heroPost.thumbnail || banner}
                     alt={heroPost.title}
                     fill priority
-                    sizes="(max-width: 768px) 100vw, 55vw"
-                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 58vw"
+                    className="object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.08]"
                   />
-                  {/* Multi-stop overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                  {/* Featured badge */}
+                  {/* Layered cinematic overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-l from-card/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                  {/* Featured pill */}
                   {heroPost.isFeatured && (
-                    <div className="absolute top-6 left-6 z-20 flex items-center gap-2
-                                    px-4 py-2 rounded-full glass-dark text-white shadow-xl
-                                    border border-white/15">
-                      <Flame className="h-3.5 w-3.5 text-orange-400 animate-pulse" />
-                      <span className="text-xs font-bold tracking-widest uppercase">Featured</span>
+                    <div className="absolute top-6 left-6 z-20">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                                      bg-black/40 backdrop-blur-md
+                                      border border-white/20 text-white shadow-2xl">
+                        <Flame className="h-3.5 w-3.5 text-orange-400 animate-pulse" />
+                        <span className="text-xs font-black tracking-widest uppercase">Featured</span>
+                      </span>
                     </div>
                   )}
 
-                  {/* Bottom meta overlay */}
-                  <div className="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between">
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full
-                                    glass-dark text-white/80 text-xs font-semibold">
-                      <BookOpen className="h-3 w-3" />
-                      5 min read
+                  {/* Bottom stats bar */}
+                  <div className="absolute bottom-0 left-0 right-0 z-20 p-6
+                                  flex items-end justify-between
+                                  bg-gradient-to-t from-black/60 to-transparent">
+                    <div className="flex flex-col gap-2">
+                      {heroPost.tags?.[0] && (
+                        <span className="self-start px-3 py-1 rounded-full
+                                         bg-primary/90 backdrop-blur-sm
+                                         text-white text-[11px] font-black tracking-widest uppercase
+                                         shadow-lg shadow-primary/30">
+                          {heroPost.tags[0]}
+                        </span>
+                      )}
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full
+                                      bg-black/50 backdrop-blur-md text-white/85 text-xs font-semibold
+                                      border border-white/10 self-start">
+                        <BookOpen className="h-3 w-3" />
+                        5 min read
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-dark text-white/80 text-xs font-semibold">
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                                      bg-black/50 backdrop-blur-md text-white/85 text-xs font-semibold
+                                      border border-white/10">
                         <Eye className="h-3 w-3" />
                         {heroPost.views || 0}
+                      </div>
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                                      bg-black/50 backdrop-blur-md text-white/85 text-xs font-semibold
+                                      border border-white/10">
+                        <MessageSquare className="h-3 w-3" />
+                        {heroPost._count?.comments || 0}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* ─── Content ─── */}
-                <div className="relative flex flex-col justify-center p-8 md:p-14 overflow-hidden">
-                  {/* Decorative blobs */}
-                  <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-[90px] pointer-events-none" />
-                  <div className="absolute bottom-0 left-0 w-60 h-60 bg-violet-500/5 rounded-full blur-[70px] pointer-events-none" />
+                {/* ── Content Panel ── */}
+                <div className="relative flex flex-col justify-between p-8 md:p-12 xl:p-14 overflow-hidden">
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-7 relative z-10">
-                    {heroPost.tags?.[0] && (
-                      <span className="px-3.5 py-1.5 text-xs font-bold tracking-widest uppercase
-                                        border border-primary/30 bg-primary/8 text-primary rounded-full">
-                        {heroPost.tags[0]}
-                      </span>
-                    )}
-                    <span className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
-                      <Calendar className="h-3.5 w-3.5 opacity-50" />
-                      {heroPost.createdAt
-                        ? new Date(heroPost.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-                        : "Recently published"}
-                    </span>
-                  </div>
+                  {/* Background decorative elements */}
+                  <div className="absolute top-0 right-0 w-[28rem] h-[28rem] bg-gradient-to-bl from-primary/8 via-violet-500/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
+                  <div className="absolute -bottom-10 -left-10 w-[20rem] h-[20rem] bg-gradient-to-tr from-pink-500/6 to-transparent rounded-full blur-[80px] pointer-events-none" />
+                  <div className="absolute inset-0 [background-image:radial-gradient(circle,rgba(139,92,246,0.04)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-60" />
 
-                  {/* Title */}
-                  <h2 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold tracking-tighter
-                                 text-foreground leading-[1.12] mb-6
-                                 group-hover:text-primary transition-colors duration-500 relative z-10">
-                    {heroPost.title}
-                  </h2>
-
-                  {/* Excerpt */}
-                  <p className="text-muted-foreground text-base md:text-lg mb-10 line-clamp-3 leading-relaxed relative z-10">
-                    {heroPost.content || heroPost.excerpt}
-                  </p>
-
-                  {/* Footer */}
-                  <div className="mt-auto pt-8 border-t border-border/40 flex items-center justify-between relative z-10">
-                    <div className="flex items-center gap-5 text-sm font-semibold text-muted-foreground">
-                      <span className="flex items-center gap-2">
-                        <MessageSquare className="h-4 w-4 opacity-50" />
-                        {heroPost._count?.comments || 0} comments
+                  {/* Top section */}
+                  <div className="relative z-10">
+                    {/* Date */}
+                    <div className="flex items-center gap-2 mb-8">
+                      <div className="h-5 w-[3px] rounded-full bg-gradient-to-b from-[#8B5CF6] to-[#EC4899]" />
+                      <span className="text-xs font-bold text-muted-foreground tracking-widest uppercase">
+                        {heroPost.createdAt
+                          ? new Date(heroPost.createdAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+                          : "Recently published"}
                       </span>
                     </div>
-                    <span className="group/btn inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full
-                                     bg-primary text-primary-foreground text-sm font-bold
-                                     shadow-lg shadow-primary/25 hover:shadow-primary/40
-                                     transition-all duration-300 hover:scale-105 hover:-translate-y-0.5">
-                      Read Story
-                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                    </span>
+
+                    {/* Title */}
+                    <h2 className="text-3xl md:text-[2rem] xl:text-[2.6rem] font-black tracking-tight
+                                   text-foreground leading-[1.1] mb-6
+                                   transition-colors duration-500
+                                   group-hover:bg-gradient-to-br group-hover:from-foreground group-hover:to-primary/80
+                                   group-hover:bg-clip-text group-hover:text-transparent">
+                      {heroPost.title}
+                    </h2>
+
+                    {/* Divider */}
+                    <div className="w-12 h-1 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] mb-6 opacity-70" />
+
+                    {/* Excerpt */}
+                    <p className="text-muted-foreground text-base leading-relaxed line-clamp-4 font-medium">
+                      {heroPost.content || heroPost.excerpt}
+                    </p>
                   </div>
+
+                  {/* Bottom CTA section */}
+                  <div className="relative z-10 mt-10">
+                    {/* Separator */}
+                    <div className="h-px bg-gradient-to-r from-border/60 via-primary/20 to-transparent mb-8" />
+
+                    {/* Meta + CTA */}
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        {/* Comments */}
+                        <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                          <div className="w-7 h-7 rounded-full bg-muted/80 flex items-center justify-center">
+                            <MessageSquare className="h-3.5 w-3.5 text-muted-foreground/60" />
+                          </div>
+                          <span>{heroPost._count?.comments || 0} comments</span>
+                        </div>
+                      </div>
+
+                      {/* Read CTA button */}
+                      <button className="group/btn relative inline-flex items-center gap-3 px-6 py-3
+                                       rounded-full overflow-hidden
+                                       bg-gradient-to-r from-[#8B5CF6] to-[#EC4899]
+                                       text-white text-sm font-black
+                                       shadow-lg shadow-violet-500/30
+                                       transition-all duration-300
+                                       hover:shadow-xl hover:shadow-violet-500/40
+                                       hover:scale-105 hover:-translate-y-0.5">
+                        <span className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                        <span className="relative">Read Story</span>
+                        <ArrowUpRight className="relative h-4 w-4 transition-transform duration-300
+                                                  group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
               </div>
+
+              {/* Subtle outer glow ring on hover */}
+              <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-primary/0
+                              group-hover:ring-primary/15 transition-all duration-700 pointer-events-none" />
             </div>
           </Link>
         </AnimatedSection>
