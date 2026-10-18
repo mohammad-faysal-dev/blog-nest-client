@@ -19,6 +19,8 @@ import {
   LogOut,
   Settings,
   Loader2,
+  FileText,
+  History,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
@@ -28,7 +30,9 @@ import { Logo } from "./Logo";
 // Map route titles to lucide icons
 const ICON_MAP: Record<string, React.ElementType> = {
   "Create Blog": PenSquare,
+  "Create Article": FileText,
   "History": Clock,
+  "All Articles": History,
   "Analytics": BarChart2,
   "Dashboard": LayoutDashboard,
   "Settings": Settings,
@@ -59,6 +63,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
     });
     setIsSigningOut(false);
   };
+
   const routes = user.role === "admin" ? adminRoutes : userRoutes;
   const dashboardHref = user.role === "admin" ? "/admin-dashboard" : "/dashboard";
 
