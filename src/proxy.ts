@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { userService } from "./services/user.service";
 import { Roles } from "./constants/roles";
 
+// Paths that admin is allowed to access under /dashboard
+const ADMIN_ALLOWED_DASHBOARD_PATHS = [
+  "/dashboard/create-blog",
+  "/dashboard/history",
+];
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   let isAuthenticated = false;
@@ -17,7 +23,11 @@ export async function proxy(request: NextRequest) {
   if (!isAdmin && pathname.startsWith("/admin-dashboard")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-  if (isAdmin && pathname.startsWith("/dashboard")) {
+  // Redirect admin away from /dashboard EXCEPT for shared pages
+  const isAllowedForAdmin = ADMIN_ALLOWED_DASHBOARD_PATHS.some((p) =>
+    pathname.startsWith(p)
+  );
+  if (isAdmin && pathname.startsWith("/dashboard") && !isAllowedForAdmin) {
     return NextResponse.redirect(new URL("/admin-dashboard", request.url));
   }
   return NextResponse.next();

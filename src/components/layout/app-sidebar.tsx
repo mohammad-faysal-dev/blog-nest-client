@@ -4,7 +4,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { adminRoutes } from "@/routes/adminRoutes";
@@ -114,30 +113,28 @@ export function AppSidebar({ user }: AppSidebarProps) {
 
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton className="p-0 h-auto w-full bg-transparent hover:bg-transparent">
-                      <Link
-                        href={item.url}
-                        className={cn(
-                          "flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group",
-                          isActive
-                            ? "bg-gradient-to-r from-cyan-500/20 to-blue-600/10 text-cyan-300 border border-cyan-500/20 shadow-[0_0_12px_rgba(6,182,212,0.12)]"
-                            : "text-neutral-400 hover:text-white hover:bg-white/8"
-                        )}
-                      >
-                        <div className={cn(
-                          "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-200",
-                          isActive
-                            ? "bg-cyan-500/20 text-cyan-400"
-                            : "bg-white/5 text-neutral-400 group-hover:bg-white/10 group-hover:text-white"
-                        )}>
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <span className="truncate">{item.title}</span>
-                        {isActive && (
-                          <span className="ml-auto h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]" />
-                        )}
-                      </Link>
-                    </SidebarMenuButton>
+                    <Link
+                      href={item.url}
+                      className={cn(
+                        "flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group",
+                        isActive
+                          ? "bg-gradient-to-r from-cyan-500/20 to-blue-600/10 text-cyan-300 border border-cyan-500/20 shadow-[0_0_12px_rgba(6,182,212,0.12)]"
+                          : "text-neutral-400 hover:text-white hover:bg-white/8"
+                      )}
+                    >
+                      <div className={cn(
+                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-200",
+                        isActive
+                          ? "bg-cyan-500/20 text-cyan-400"
+                          : "bg-white/5 text-neutral-400 group-hover:bg-white/10 group-hover:text-white"
+                      )}>
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      <span className="truncate">{item.title}</span>
+                      {isActive && (
+                        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]" />
+                      )}
+                    </Link>
                   </SidebarMenuItem>
                 );
               })}

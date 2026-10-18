@@ -10,8 +10,12 @@ import {
   Tag,
   Send,
   Loader2,
-  Sparkles,
   X,
+  Sparkles,
+  Hash,
+  AlignLeft,
+  Zap,
+  CheckCircle2,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -26,15 +30,29 @@ const formSchema = z.object({
 
 const MAX_CONTENT = 5000;
 
+const SUGGESTED_TAGS = [
+  "JavaScript",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Node.js",
+  "CSS",
+  "Python",
+  "DevOps",
+  "AI",
+  "Web3",
+];
+
 const CreateBlogFromClient = () => {
   const [tagInput, setTagInput] = useState("");
   const [tagChips, setTagChips] = useState<string[]>([]);
+  const [published, setPublished] = useState(false);
 
   const addTag = (raw: string) => {
     raw
       .split(",")
       .map((t) => t.trim())
-      .filter((t) => t && !tagChips.includes(t))
+      .filter((t) => t && !tagChips.includes(t) && tagChips.length < 10)
       .forEach((t) => setTagChips((prev) => [...prev, t]));
     setTagInput("");
   };
@@ -65,6 +83,8 @@ const CreateBlogFromClient = () => {
         }
         toast.success("🎉 Article published!", { id: toastId });
         setTagChips([]);
+        setPublished(true);
+        setTimeout(() => setPublished(false), 3000);
       } catch {
         toast.error("Something went wrong, please try again.", { id: toastId });
       }
@@ -74,160 +94,82 @@ const CreateBlogFromClient = () => {
   const isSubmitting = form.state.isSubmitting;
 
   return (
-    <div className="relative w-full">
-      {/* Ambient glows behind the card */}
-      <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-[80px]" />
-      <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-indigo-500/10 blur-[80px]" />
+    <div className="relative w-full space-y-4">
 
-      <div className="relative rounded-3xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-2xl shadow-[0_8px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+      {/* ── Main Editor Card ── */}
+      <div className="relative rounded-2xl border border-white/[0.08] bg-[#0c0c0e] overflow-hidden shadow-2xl">
 
-        {/* ── Gradient top bar ── */}
-        <div className="h-[3px] w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
+        {/* Top gradient bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-violet-500 via-cyan-400 to-indigo-500" />
 
-        {/* ── Header ── */}
-        <div className="flex items-center justify-between px-6 pt-6 pb-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Sparkles className="h-5 w-5 text-cyan-400" />
-              <h2 className="text-2xl font-extrabold tracking-tight text-white">
-                Article Editor
-              </h2>
+        {/* Card Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-white/10">
+              <Sparkles className="h-4 w-4 text-cyan-400" />
             </div>
-            <p className="text-sm text-neutral-500">
-              Craft your ideas and share them with the world.
-            </p>
+            <div>
+              <p className="text-sm font-bold text-white">Article Editor</p>
+              <p className="text-[11px] text-neutral-500">Craft your story</p>
+            </div>
           </div>
-          {/* Draft badge */}
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />
-            Draft
-          </span>
+
+          <div className="flex items-center gap-2">
+            {/* Autosave pill */}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/8 px-3 py-1 text-[11px] font-medium text-emerald-400">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+              Auto-saving
+            </span>
+            {/* Draft label */}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/8 px-3 py-1 text-[11px] font-medium text-amber-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              Draft
+            </span>
+          </div>
         </div>
 
-        {/* ── Divider ── */}
-        <div className="mx-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-        {/* ── Form ── */}
+        {/* Form */}
         <form
           id="blog-form"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
           }}
-          className="px-6 py-5 space-y-5"
+          className="divide-y divide-white/[0.05]"
         >
-          {/* ─── Title ─── */}
+          {/* ─── Title Field ─── */}
           <form.Field name="title">
             {(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
               return (
-                <div className="space-y-2">
-                  <label
-                    htmlFor="blog-title"
-                    className="flex items-center gap-2 text-sm font-semibold text-neutral-300"
-                  >
-                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-cyan-500/15 text-cyan-400">
-                      <Type className="h-3.5 w-3.5" />
-                    </span>
-                    Blog Title
-                    <span className="text-red-400">*</span>
-                  </label>
-                  <div className="relative group">
-                    <input
-                      id="blog-title"
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Write a headline that grabs attention…"
-                      autoComplete="off"
-                      className={`
-                        w-full h-14 rounded-2xl border bg-white/[0.04] px-5 text-base text-white
-                        placeholder:text-neutral-600 outline-none transition-all duration-200
-                        hover:bg-white/[0.07]
-                        focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(6,182,212,0.15)]
-                        ${isInvalid
-                          ? "border-red-500/50 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]"
-                          : "border-white/10 focus:border-cyan-500/60"
-                        }
-                      `}
-                    />
-                  </div>
-                  {isInvalid &&
-                    field.state.meta.errors.map((err) => (
-                      <p key={String(err)} className="flex items-center gap-1 text-xs text-red-400">
-                        <X className="h-3 w-3" /> {String(err)}
-                      </p>
-                    ))}
-                </div>
-              );
-            }}
-          </form.Field>
-
-          {/* ─── Content ─── */}
-          <form.Field name="content">
-            {(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-              const charCount = field.state.value.length;
-              const pct = Math.min((charCount / MAX_CONTENT) * 100, 100);
-              const barColor =
-                pct > 90
-                  ? "bg-red-500"
-                  : pct > 70
-                    ? "bg-amber-400"
-                    : "bg-cyan-400";
-
-              return (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label
-                      htmlFor="blog-content"
-                      className="flex items-center gap-2 text-sm font-semibold text-neutral-300"
-                    >
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-indigo-500/15 text-indigo-400">
-                        <FileText className="h-3.5 w-3.5" />
-                      </span>
-                      Content
-                      <span className="text-red-400">*</span>
+                <div className="px-6 py-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Type className="h-3.5 w-3.5 text-cyan-400" />
+                    <label htmlFor="blog-title" className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                      Title <span className="text-red-400 normal-case tracking-normal">*</span>
                     </label>
-                    <span className={`text-xs font-mono ${pct > 90 ? "text-red-400" : "text-neutral-500"}`}>
-                      {charCount.toLocaleString()} / {MAX_CONTENT.toLocaleString()}
-                    </span>
                   </div>
-
-                  {/* Progress bar */}
-                  <div className="h-0.5 rounded-full bg-white/5 overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-300 ${barColor}`}
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-
-                  <textarea
-                    id="blog-content"
+                  <input
+                    id="blog-title"
                     name={field.name}
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Start writing your article here… Share your insights, code snippets, and ideas."
-                    rows={7}
+                    placeholder="Write a compelling headline that grabs attention…"
+                    autoComplete="off"
                     className={`
-                      w-full resize-y rounded-2xl border bg-white/[0.04] px-5 py-4
-                      text-sm text-white leading-relaxed
-                      placeholder:text-neutral-600 outline-none transition-all duration-200
-                      hover:bg-white/[0.07]
-                      focus:bg-white/[0.08] focus:shadow-[0_0_0_3px_rgba(6,182,212,0.15)]
+                      w-full bg-transparent text-xl font-bold text-white
+                      placeholder:text-neutral-700 outline-none border-0
+                      border-b-2 pb-2 transition-all duration-300
                       ${isInvalid
-                        ? "border-red-500/50 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]"
+                        ? "border-red-500/50"
                         : "border-white/10 focus:border-cyan-500/60"
                       }
                     `}
                   />
                   {isInvalid &&
                     field.state.meta.errors.map((err) => (
-                      <p key={String(err)} className="flex items-center gap-1 text-xs text-red-400">
+                      <p key={String(err)} className="mt-2 flex items-center gap-1 text-xs text-red-400">
                         <X className="h-3 w-3" /> {String(err)}
                       </p>
                     ))}
@@ -236,120 +178,188 @@ const CreateBlogFromClient = () => {
             }}
           </form.Field>
 
-          {/* ─── Tags ─── */}
+          {/* ─── Content Field ─── */}
+          <form.Field name="content">
+            {(field) => {
+              const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              const charCount = field.state.value.length;
+              const pct = Math.min((charCount / MAX_CONTENT) * 100, 100);
+              const barColor = pct > 90 ? "bg-red-500" : pct > 70 ? "bg-amber-400" : "bg-cyan-500";
+
+              return (
+                <div className="px-6 py-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <AlignLeft className="h-3.5 w-3.5 text-indigo-400" />
+                      <label htmlFor="blog-content" className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                        Content <span className="text-red-400 normal-case tracking-normal">*</span>
+                      </label>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1.5 w-24 h-1 rounded-full bg-white/5 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <span className={`text-[11px] font-mono tabular-nums ${pct > 90 ? "text-red-400" : "text-neutral-600"}`}>
+                        {charCount.toLocaleString()} / {MAX_CONTENT.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                  <textarea
+                    id="blog-content"
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="Start writing your article here…
+
+Share your insights, code snippets, tutorials, or ideas with the world. Make it engaging and informative!"
+                    rows={14}
+                    className={`
+                      w-full resize-none bg-transparent text-sm text-neutral-200
+                      leading-[1.9] placeholder:text-neutral-700 outline-none
+                      transition-all duration-200
+                      ${isInvalid ? "text-red-200" : ""}
+                    `}
+                  />
+                  {isInvalid &&
+                    field.state.meta.errors.map((err) => (
+                      <p key={String(err)} className="mt-1 flex items-center gap-1 text-xs text-red-400">
+                        <X className="h-3 w-3" /> {String(err)}
+                      </p>
+                    ))}
+                </div>
+              );
+            }}
+          </form.Field>
+
+          {/* ─── Tags Field ─── */}
           <form.Field name="tags">
             {(field) => (
-              <div className="space-y-2">
-                <label
-                  htmlFor="blog-tags"
-                  className="flex items-center gap-2 text-sm font-semibold text-neutral-300"
-                >
-                  <span className="flex h-6 w-6 items-center justify-center rounded-md bg-purple-500/15 text-purple-400">
-                    <Tag className="h-3.5 w-3.5" />
-                  </span>
-                  Tags
-                </label>
+              <div className="px-6 py-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Hash className="h-3.5 w-3.5 text-purple-400" />
+                  <label htmlFor="blog-tags" className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                    Tags
+                    <span className="ml-2 normal-case tracking-normal text-neutral-600 font-normal">(max 10)</span>
+                  </label>
+                </div>
 
-                {/* Tag chips */}
-                {tagChips.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {tagChips.map((chip) => (
-                      <span
-                        key={chip}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300"
+                {/* Tag chips display */}
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {tagChips.map((chip) => (
+                    <span
+                      key={chip}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/25 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300"
+                    >
+                      #{chip}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(chip)}
+                        className="hover:text-red-400 transition-colors"
                       >
-                        #{chip}
-                        <button
-                          type="button"
-                          onClick={() => removeTag(chip)}
-                          className="hover:text-red-400 transition-colors"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      </span>
+                        <X className="h-2.5 w-2.5" />
+                      </button>
+                    </span>
+                  ))}
+                  {tagChips.length < 10 && (
+                    <div className="flex items-center">
+                      <input
+                        id="blog-tags"
+                        name={field.name}
+                        value={tagInput}
+                        onChange={(e) => {
+                          setTagInput(e.target.value);
+                          field.handleChange(e.target.value);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === ",") {
+                            e.preventDefault();
+                            addTag(tagInput);
+                          }
+                          if (e.key === "Backspace" && !tagInput && tagChips.length > 0) {
+                            removeTag(tagChips[tagChips.length - 1]);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (tagInput.trim()) addTag(tagInput);
+                          field.handleBlur();
+                        }}
+                        placeholder={tagChips.length === 0 ? "Add tags…" : ""}
+                        className="h-7 min-w-[120px] bg-transparent text-sm text-white placeholder:text-neutral-700 outline-none"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Suggested tags */}
+                <div>
+                  <p className="text-[11px] text-neutral-600 mb-2">Suggested:</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {SUGGESTED_TAGS.filter((t) => !tagChips.includes(t)).slice(0, 8).map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => addTag(tag)}
+                        className="rounded-full border border-white/8 bg-white/[0.03] px-2.5 py-1 text-[11px] text-neutral-500 hover:border-violet-500/30 hover:bg-violet-500/10 hover:text-violet-300 transition-all duration-150"
+                      >
+                        + {tag}
+                      </button>
                     ))}
                   </div>
-                )}
-
-                <div className="flex gap-3">
-                  <input
-                    id="blog-tags"
-                    name={field.name}
-                    value={tagInput}
-                    onChange={(e) => {
-                      setTagInput(e.target.value);
-                      field.handleChange(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === ",") {
-                        e.preventDefault();
-                        addTag(tagInput);
-                      }
-                    }}
-                    onBlur={() => {
-                      if (tagInput.trim()) addTag(tagInput);
-                      field.handleBlur();
-                    }}
-                    placeholder="Type a tag and press Enter or comma…"
-                    className="
-                      flex-1 h-12 rounded-2xl border border-white/10 bg-white/[0.04] px-5
-                      text-sm text-white placeholder:text-neutral-600 outline-none
-                      transition-all duration-200 hover:bg-white/[0.07]
-                      focus:border-purple-500/60 focus:bg-white/[0.08]
-                      focus:shadow-[0_0_0_3px_rgba(168,85,247,0.15)]
-                    "
-                  />
-                  <button
-                    type="button"
-                    onClick={() => addTag(tagInput)}
-                    className="h-12 px-5 rounded-2xl border border-white/10 bg-white/5 text-sm font-medium text-neutral-300 hover:bg-white/10 hover:text-white transition-all"
-                  >
-                    Add
-                  </button>
                 </div>
-                <p className="text-neutral-600 text-xs">
-                  Press <kbd className="rounded px-1 py-0.5 bg-white/10 font-mono text-neutral-400">Enter</kbd> or{" "}
-                  <kbd className="rounded px-1 py-0.5 bg-white/10 font-mono text-neutral-400">,</kbd> to add a tag.
-                </p>
               </div>
             )}
           </form.Field>
         </form>
 
-        {/* ── Divider ── */}
-        <div className="mx-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-        {/* ── Footer / Publish ── */}
-        <div className="px-6 py-4 flex items-center justify-between gap-4">
-          <p className="text-xs text-neutral-600">
-            Your article will be reviewed before publishing.
-          </p>
+        {/* ── Footer / Publish Bar ── */}
+        <div className="flex items-center justify-between gap-4 px-6 py-4 border-t border-white/[0.06] bg-white/[0.02]">
+          <div className="flex items-center gap-2 text-xs text-neutral-600">
+            <FileText className="h-3.5 w-3.5" />
+            <span>
+              {form.state.values.title
+                ? `"${form.state.values.title.slice(0, 30)}${form.state.values.title.length > 30 ? "…" : ""}" · `
+                : ""}
+              {tagChips.length > 0 ? `${tagChips.length} tags · ` : ""}
+              {form.state.values.content.split(/\s+/).filter(Boolean).length} words
+            </span>
+          </div>
 
           <button
             form="blog-form"
             type="submit"
             disabled={isSubmitting}
             className="
-              relative flex items-center gap-2 px-8 py-3.5 rounded-2xl
-              font-bold text-sm text-white overflow-hidden
-              bg-gradient-to-r from-cyan-500 to-blue-600
-              shadow-[0_0_24px_rgba(6,182,212,0.35)]
-              hover:shadow-[0_0_32px_rgba(6,182,212,0.55)] hover:-translate-y-0.5
+              relative flex items-center gap-2 px-7 py-2.5 rounded-xl
+              font-semibold text-sm text-white overflow-hidden
+              bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-600
+              hover:from-violet-500 hover:via-indigo-500 hover:to-cyan-500
+              shadow-[0_0_20px_rgba(139,92,246,0.3)]
+              hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]
+              hover:-translate-y-0.5 active:translate-y-0
               disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0
               transition-all duration-200 group
             "
           >
-            {/* Shimmer overlay */}
-            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+            {/* Shimmer */}
+            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
 
             {isSubmitting ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin relative" />
                 <span className="relative">Publishing…</span>
+              </>
+            ) : published ? (
+              <>
+                <CheckCircle2 className="h-4 w-4 relative text-emerald-300" />
+                <span className="relative text-emerald-300">Published!</span>
               </>
             ) : (
               <>
-                <Send className="h-4 w-4 relative" />
+                <Zap className="h-4 w-4 relative" />
                 <span className="relative">Publish Article</span>
               </>
             )}

@@ -1,12 +1,20 @@
 import { Route } from "@/types";
 
-export const adminRoutes:Route[] = [
+export const adminRoutes: Route[] = [
   {
-    title: "user Management",
+    title: "User Management",
     items: [
       {
         title: "Analytics",
-        url: "/analytics",
+        url: "/admin-dashboard",
+      },
+      {
+        title: "Create Blog",
+        url: "/dashboard/create-blog",
+      },
+      {
+        title: "History",
+        url: "/dashboard/history",
       },
     ],
   },
