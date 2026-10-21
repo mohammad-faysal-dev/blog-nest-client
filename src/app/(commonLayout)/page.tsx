@@ -32,43 +32,37 @@ import {
   Play,
 } from "lucide-react";
 
-/* ── Categories ── */
-const categories = [
+/* ── Categories (no hardcoded counts — fetched dynamically) ── */
+const CATEGORY_CONFIG = [
   {
-    name: "Web Dev", icon: MonitorPlay, count: 42,
+    name: "Web Dev", tag: "web-dev", icon: MonitorPlay,
     gradient: "from-[#8B5CF6] to-[#A855F7]",
-    bg: "bg-violet-500/10", tc: "text-violet-500",
-    ring: "ring-violet-500/20",
+    bg: "bg-violet-500/10", tc: "text-violet-500", ring: "ring-violet-500/20",
   },
   {
-    name: "AI & ML", icon: Cpu, count: 28,
+    name: "AI & ML", tag: "ai", icon: Cpu,
     gradient: "from-[#A855F7] to-[#C084FC]",
-    bg: "bg-purple-500/10", tc: "text-purple-500",
-    ring: "ring-purple-500/20",
+    bg: "bg-purple-500/10", tc: "text-purple-500", ring: "ring-purple-500/20",
   },
   {
-    name: "Architecture", icon: Component, count: 19,
+    name: "Architecture", tag: "architecture", icon: Component,
     gradient: "from-[#C084FC] to-[#EC4899]",
-    bg: "bg-fuchsia-500/10", tc: "text-fuchsia-500",
-    ring: "ring-fuchsia-500/20",
+    bg: "bg-fuchsia-500/10", tc: "text-fuchsia-500", ring: "ring-fuchsia-500/20",
   },
   {
-    name: "Security", icon: Shield, count: 15,
+    name: "Security", tag: "security", icon: Shield,
     gradient: "from-[#EC4899] to-[#F472B6]",
-    bg: "bg-pink-500/10", tc: "text-pink-500",
-    ring: "ring-pink-500/20",
+    bg: "bg-pink-500/10", tc: "text-pink-500", ring: "ring-pink-500/20",
   },
   {
-    name: "Databases", icon: Database, count: 23,
+    name: "Databases", tag: "database", icon: Database,
     gradient: "from-[#8B5CF6] to-[#EC4899]",
-    bg: "bg-violet-500/10", tc: "text-violet-500",
-    ring: "ring-violet-500/20",
+    bg: "bg-violet-500/10", tc: "text-violet-500", ring: "ring-violet-500/20",
   },
   {
-    name: "Design", icon: Paintbrush, count: 31,
+    name: "Design", tag: "design", icon: Paintbrush,
     gradient: "from-[#EC4899] to-[#8B5CF6]",
-    bg: "bg-pink-500/10", tc: "text-pink-500",
-    ring: "ring-pink-500/20",
+    bg: "bg-pink-500/10", tc: "text-pink-500", ring: "ring-pink-500/20",
   },
 ];
 
@@ -97,10 +91,21 @@ const trustBadges = [
 /* ================================================================= */
 
 const Page = async () => {
-  const [featuredRes, recentRes] = await Promise.all([
+  // Fetch featured posts, recent posts, and all category counts in parallel
+  const [featuredRes, recentRes, ...categoryResults] = await Promise.all([
     blogService.getBlogPosts({ limit: "2", isFeatured: true }, { revalidate: 30 }),
     blogService.getBlogPosts({ limit: "3" }, { revalidate: 10 }),
+    // One lightweight call per category tag to get the total count
+    ...CATEGORY_CONFIG.map((cat) =>
+      blogService.getBlogPosts({ tag: cat.tag, limit: "1" }, { revalidate: 60 }),
+    ),
   ]);
+
+  // Merge dynamic counts into the config
+  const categories = CATEGORY_CONFIG.map((cat, idx) => ({
+    ...cat,
+    count: categoryResults[idx]?.data?.meta?.total ?? 0,
+  }));
 
   const featured = featuredRes?.data?.data || [];
   const recent = recentRes?.data?.data || [];

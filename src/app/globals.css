@@ -445,6 +445,16 @@
   left: 150%;
 }
 
+/* ── Hero post card shadow (replaces JS onMouseEnter/Leave) ── */
+.hero-card {
+  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.7s ease, transform 0.7s ease;
+}
+
+.hero-card:hover {
+  box-shadow: 0 30px 80px -15px rgba(139, 92, 246, 0.25);
+}
+
 /* ========================================================
    ROOT TOKENS
    ======================================================== */

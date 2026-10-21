@@ -17,6 +17,7 @@ interface GetBlogParams {
   search?: string;
   page?: string;
   limit?: string;
+  tag?: string;
 }
 export const blogService = {
   getBlogPosts: async function (
