@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "cn";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -67,18 +68,24 @@ export function LoginForm({
     }
   };
 
+  const router = useRouter();
+
   const form = useForm({
     defaultValues: { email: "", password: "" },
     validators: { onSubmit: formSchema },
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Signing you in...");
       try {
-        const { data, error } = await authClient.signIn.email(value);
+        const { data, error } = await authClient.signIn.email({
+          ...value,
+          callbackURL: "/dashboard",
+        });
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         }
         toast.success("Welcome back!", { id: toastId });
+        router.push("/dashboard");
       } catch {
         toast.error("Something went wrong, please try again", { id: toastId });
       }
