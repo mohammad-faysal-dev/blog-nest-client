@@ -104,12 +104,14 @@ Create a `.env` file in the project root:
 
 ```env
 BACKEND_URL=http://localhost:5000
+API_URL=http://localhost:5000
 FRONTEND_URL=http://localhost:3000
-API_URL=http://localhost:5000/api
-AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_FRONTEND_URL=http://localhost:3000
 ```
 
 > ⚠️ All variables are validated at startup. A missing or incorrect value will crash the app on purpose — to catch misconfiguration early.
+
+For Vercel, set `BACKEND_URL` and `API_URL` to the backend's origin (for example, `https://blog-nest-server-six.vercel.app`, without `/api`), and set `FRONTEND_URL` and `NEXT_PUBLIC_FRONTEND_URL` to the deployed frontend origin. Authentication is proxied through the frontend's `/api/auth` path so the session cookie is available to dashboard requests on Vercel.
 
 ### 3️⃣ Run
 
