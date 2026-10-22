@@ -71,7 +71,7 @@ const Navbar1 = ({
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "sticky top-0 w-full z-50 transition-all duration-300",
         scrolled
           ? "bg-background/70 backdrop-blur-xl border-b border-white/10 shadow-sm"
           : "bg-transparent py-2",
@@ -193,4 +193,3 @@ const Navbar1 = ({
 };
 
 export { Navbar1 };
-
