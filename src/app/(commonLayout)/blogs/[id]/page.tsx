@@ -16,9 +16,17 @@ import {
 } from "lucide-react";
 import { BlogPost } from "@/types";
 
+// Allow dynamic rendering for paths not pre-generated at build time
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const { data } = await blogService.getBlogPosts();
-  return data?.data?.map((blog: BlogPost) => ({ id: blog.id })).splice(0, 3);
+  try {
+    const { data } = await blogService.getBlogPosts();
+    return data?.data?.map((blog: BlogPost) => ({ id: blog.id })).slice(0, 3) ?? [];
+  } catch {
+    // Backend unavailable at build time — no pages pre-rendered, all served dynamically
+    return [];
+  }
 }
 
 function estimateReadTime(content: string): number {

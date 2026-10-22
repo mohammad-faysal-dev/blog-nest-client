@@ -57,10 +57,21 @@ export function SignupForm({ ...props }: React.ComponentProps<"div">) {
   const strength = passwordStrength(passwordValue);
 
   const handleGoogleLogin = async () => {
-    const data = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "http://localhost:3000/",
-    });
+    try {
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: `${process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000"}/`,
+      });
+
+      if (error) {
+        toast.error(error.message);
+      }
+    } catch (error) {
+      console.error("Google sign-in failed", error);
+      toast.error(
+        "Unable to reach the authentication service. Check that it is running and try again.",
+      );
+    }
   };
 
   const form = useForm({
